@@ -25,18 +25,36 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    cellcontainer.cpp \
+    cellcontainervalue.cpp \
+    cloniumgame.cpp \
+    cloniumgrid.cpp \
+    game.cpp \
+    grid.cpp \
         main.cpp \
     cloniummenu.cpp \
     mainmenu.cpp \
     cloniumparameters.cpp \
     about.cpp \
+    pawn.cpp \
+    player.cpp \
+    squaregrid.cpp \
     widgetmanager.cpp
 
 HEADERS += \
+    cellcontainer.h \
+    cellcontainervalue.h \
+    cloniumgame.h \
+    cloniumgrid.h \
     cloniummenu.h \
+    game.h \
+    grid.h \
     mainmenu.h \
     cloniumparameters.h \
     about.h \
+    pawn.h \
+    player.h \
+    squaregrid.h \
     widgetmanager.h
 
 FORMS +=
