@@ -24,6 +24,9 @@ WidgetManager::WidgetManager(QWidget *parent) : QMainWindow(parent)
 
     cloParams = new CloniumParameters(this);
     cloParams->hide();
+
+    cloGrid = new GUI_Grid(this);
+    cloGrid->hide();
 }
 
 void WidgetManager::RetourMenu()
@@ -50,4 +53,30 @@ void WidgetManager::goToCloniumParams(){
     this->WidgetActif=cloParams;
     cloMenu->hide();
     cloParams->show();
+}
+
+void WidgetManager::goToTeams(){
+    unsigned int nbHumans = cloParams->returnNbHumanPlayers();
+    unsigned int nbAI = cloParams->returnNbAIPlayers();
+    cloTeams = new GUI_Team(this, nbHumans, nbAI);
+
+    this->WidgetActif=cloTeams;
+    cloParams->hide();
+    cloTeams->show();
+}
+
+void WidgetManager::goToIndividual(){
+    unsigned int nbHumans = cloParams->returnNbHumanPlayers();
+    unsigned int nbAI = cloParams->returnNbAIPlayers();
+
+    cloIndi = new GUI_Individual(this, nbHumans, nbAI);
+    this->WidgetActif=cloIndi;
+    cloParams->hide();
+    cloIndi->show();
+}
+
+void WidgetManager:: goToGrid(){
+    this->WidgetActif=cloGrid;
+    cloIndi->hide();
+    cloGrid->show();
 }
