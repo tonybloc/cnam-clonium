@@ -4,6 +4,9 @@
 #include "mainmenu.h"
 #include "about.h"
 #include "cloniummenu.h"
+#include "gui_team.h"
+#include "gui_individual.h"
+#include "gui_grid.h"
 
 class WidgetManager : public QMainWindow
 {
@@ -11,13 +14,14 @@ class WidgetManager : public QMainWindow
 public:
     explicit WidgetManager(QWidget *parent = nullptr);
 
-signals:
-
 public slots:
     void RetourMenu();
     void goToClonium();
     void goToAbout();
     void goToCloniumParams();
+    void goToTeams();
+    void goToIndividual();
+    void goToGrid();
 
 private:
     QWidget* WidgetActif;
@@ -25,6 +29,9 @@ private:
     CloniumMenu* cloMenu;
     CloniumParameters* cloParams;
     About* about;
+    GUI_Team* cloTeams;
+    GUI_Individual* cloIndi;
+    GUI_Grid* cloGrid;
 };
 
 #endif // WIDGETMANAGER_H
