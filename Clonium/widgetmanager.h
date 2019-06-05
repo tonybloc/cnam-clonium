@@ -7,6 +7,7 @@
 #include "gui_team.h"
 #include "gui_individual.h"
 #include "gui_grid.h"
+#include "cloniumrules.h"
 
 class WidgetManager : public QMainWindow
 {
@@ -22,6 +23,7 @@ public slots:
     void goToTeams();
     void goToIndividual();
     void goToGrid();
+    void goToCloniumRules();
 
 private:
     QWidget* WidgetActif;
@@ -32,6 +34,7 @@ private:
     GUI_Team* cloTeams;
     GUI_Individual* cloIndi;
     GUI_Grid* cloGrid;
+    cloniumrules* cloRules;
 };
 
 #endif // WIDGETMANAGER_H

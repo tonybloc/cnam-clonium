@@ -48,7 +48,8 @@ SOURCES += \
     squaregrid.cpp \
     team.cpp \
     widgetmanager.cpp \
-    abstractcloniumpawn.cpp
+    abstractcloniumpawn.cpp \
+    cloniumrules.cpp
 
 HEADERS += \
     abstractcloniumplayer.h \
@@ -74,6 +75,7 @@ HEADERS += \
     team.h \
     widgetmanager.h \
     abstractcloniumpawn.h \
+    cloniumrules.h
 
 
 FORMS +=
