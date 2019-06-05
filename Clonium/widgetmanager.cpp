@@ -27,6 +27,10 @@ WidgetManager::WidgetManager(QWidget *parent) : QMainWindow(parent)
 
     cloGrid = new GUI_Grid(this);
     cloGrid->hide();
+
+    cloRules = new cloniumrules(this);
+    cloRules->hide();
+
 }
 
 void WidgetManager::RetourMenu()
@@ -35,6 +39,7 @@ void WidgetManager::RetourMenu()
     cloMenu->hide();
     about->hide();
     menu->show();
+    cloRules->hide();
 }
 
 void WidgetManager::goToClonium(){
@@ -80,3 +85,10 @@ void WidgetManager:: goToGrid(){
     cloIndi->hide();
     cloGrid->show();
 }
+
+void WidgetManager::goToCloniumRules(){
+    this->WidgetActif=cloRules;
+    cloMenu->hide();
+    cloRules->show();
+}
+

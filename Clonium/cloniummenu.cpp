@@ -26,6 +26,8 @@ CloniumMenu::CloniumMenu(QWidget *parent)
     m_btnGameRules->setFont(QFont("Commic Sans MS", 16));
     m_btnGameRules->setCursor(Qt::PointingHandCursor);
     m_lblClonium->setAlignment(Qt::AlignHCenter);
+    connect(m_btnGameRules, SIGNAL(clicked()), this->parent(), SLOT(goToCloniumRules()));
+
 
     m_btnReturn =new QPushButton("Retour", this);
     m_btnReturn->setFont(QFont("Commic Sans MS", 16));
