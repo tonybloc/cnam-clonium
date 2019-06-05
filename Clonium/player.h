@@ -11,11 +11,11 @@ class Player
 {
 public:
     Player(unsigned int id, std::string name);
-    virtual ~Player();
+    virtual ~Player() ;
 
     void addPawn(Pawn& p);
     void removePawn(Pawn& p);
-
+    Pawn& getPawnAt(unsigned int key);
 
 private:
     std::vector<Pawn> m_ListOfPawns;

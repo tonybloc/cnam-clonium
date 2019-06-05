@@ -14,7 +14,7 @@ void Game::addPlayer(const Player& p)
 Player& Game::nextPlayer(void)
 {
     if(m_Players.empty())
-        throw std::out_of_range("ERREUR : Aucune joueur dans la partie");
+        throw std::out_of_range("ERREUR : Aucun joueur dans la partie");
     else {
         Player& p = m_Players.front();
         m_Players.pop();

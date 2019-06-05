@@ -8,6 +8,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QFormLayout>
+#include <QGroupBox>
+#include <QRadioButton>
 
 class CloniumParameters : public QWidget
 {
@@ -15,16 +17,33 @@ class CloniumParameters : public QWidget
 
 public:
     CloniumParameters(QWidget *parent = nullptr);
+    unsigned int returnNbHumanPlayers();
+    unsigned int returnNbAIPlayers();
 
-public slots:
+private slots:
+    void onClickTeam();
+    void onClickIndividual();
 
 private:
     //title
     QLabel *m_lblCloParams;
 
     //number of players
-    QLabel *m_lblNbPlayer;
-    QComboBox *m_cbo_NbPlayer;
+    QGroupBox *m_grpHumans;
+    QRadioButton *m_radHum1;
+    QRadioButton *m_radHum2;
+    QRadioButton *m_radHum3;
+    QRadioButton *m_radHum4;
+    QHBoxLayout *m_vboxHumans;
+
+
+    //number of AI players
+    QGroupBox *m_grpAI;
+    QRadioButton *m_radAI0;
+    QRadioButton *m_radAI1;
+    QRadioButton *m_radAI2;
+    QRadioButton *m_radAI3;
+    QHBoxLayout *m_vboxAI;
 
     // grid shape
     QLabel *m_lblGridShape;
@@ -33,10 +52,22 @@ private:
     // grid shape
     QLabel *m_lblRound;
 
-    //button to launch the game
-    QPushButton *m_btnPlay;
+    //button to create the teams
+    QPushButton *m_btnTeam;
+    QPushButton *m_btnIndividual;
 
+    //layout of the window
     QGridLayout *m_layout;
+
+    QGroupBox *createGrpHumans();
+    QGroupBox *createGrpAI();
+
+    bool checkNumberPlayers();
+    bool accessToTeam();
+
+    void setNumberOfPlayers();
+
+
 
 };
 
