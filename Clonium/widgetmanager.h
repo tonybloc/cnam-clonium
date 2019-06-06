@@ -24,6 +24,7 @@ public slots:
     void goToIndividual();
     void goToGrid();
     void goToCloniumRules();
+    void goToGridSaved();
 
 private:
     QWidget* WidgetActif;

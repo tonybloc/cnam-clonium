@@ -1,4 +1,5 @@
 #include "cloniummenu.h"
+#include <QMessageBox>
 
 CloniumMenu::CloniumMenu(QWidget *parent)
 {
@@ -17,10 +18,12 @@ CloniumMenu::CloniumMenu(QWidget *parent)
     m_btnPlay->setCursor(Qt::PointingHandCursor);
     connect(m_btnPlay, SIGNAL(clicked()), this->parent(), SLOT(goToCloniumParams()));
 
-    m_btnOptions = new QPushButton("Options", this);
+    m_btnOptions = new QPushButton("Importer une partie", this);
     m_btnOptions->setFont(QFont("Commic Sans MS", 16));
     m_btnOptions->setCursor(Qt::PointingHandCursor);
     m_lblClonium->setAlignment(Qt::AlignHCenter);
+    connect(m_btnOptions, SIGNAL(clicked()), this, SLOT(importGame()));
+
 
     m_btnGameRules = new QPushButton("Règles du jeu", this);
     m_btnGameRules->setFont(QFont("Commic Sans MS", 16));
@@ -44,4 +47,11 @@ CloniumMenu::CloniumMenu(QWidget *parent)
     m_layout->setMargin(100);
 
     this->setLayout(m_layout);
+}
+
+void CloniumMenu::importGame(){
+    // if exists
+    QMessageBox::information(this, "Information", "Import effectué !");
+    connect(m_btnOptions, SIGNAL(clicked()), this->parent(), SLOT(goToGridSaved()));
+
 }
