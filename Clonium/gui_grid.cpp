@@ -25,7 +25,7 @@ GUI_Grid::GUI_Grid(QWidget *parent)
             btn->setIconSize(QSize(this->size().width()/NB_COLUMNS-7,this->size().width()/NB_COLUMNS-7));
 
             btn->setObjectName(QString("btn%1%2").arg(i).arg(j));
-            connect(btn, SIGNAL(clicked()), this, SLOT(test()));
+            connect(btn, SIGNAL(clicked()), this, SLOT(onClickButtonGrid()));
 
             //add button
             m_layout->addWidget(btn,i,j);
