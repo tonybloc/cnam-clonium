@@ -20,6 +20,7 @@ public:
     unsigned int returnNbHumanPlayers();
     unsigned int returnNbAIPlayers();
 
+// onclick events on the buttons
 private slots:
     void onClickTeam();
     void onClickIndividual();
@@ -35,7 +36,6 @@ private:
     QRadioButton *m_radHum3;
     QRadioButton *m_radHum4;
     QHBoxLayout *m_vboxHumans;
-
 
     //number of AI players
     QGroupBox *m_grpAI;
@@ -59,6 +59,7 @@ private:
     //layout of the window
     QGridLayout *m_layout;
 
+    // groupboxes
     QGroupBox *createGrpHumans();
     QGroupBox *createGrpAI();
 
@@ -66,9 +67,6 @@ private:
     bool accessToTeam();
 
     void setNumberOfPlayers();
-
-
-
 };
 
 #endif // CLONIUMPARAMETERS_H

@@ -12,7 +12,6 @@ CloniumParameters::CloniumParameters(QWidget *parent)
     this->setParent(parent);
     m_layout = new QGridLayout;
 
-
     m_lblCloParams = new QLabel("Paramètres");
     m_lblCloParams->setFont(QFont("Commic Sans MS", 20));
     m_lblCloParams->setStyleSheet("font-weight:bold; color:black");
@@ -29,10 +28,6 @@ CloniumParameters::CloniumParameters(QWidget *parent)
     m_cbo_GridShape->addItem(tr("Carrée"));
     m_cbo_GridShape->addItem(tr("Rectangulaire"));
     m_cbo_GridShape->addItem(tr("Ronde"));
-
-    // resume a game
-    //m_lblRound = new QLabel("Reprendre une partie");
-    //m_lblNbPlayer->setFont(QFont("Commic Sans MS", 16));
 
     //button to create teams
     /*m_btnTeam= new QPushButton("Jouer en équipe", this);
@@ -65,22 +60,27 @@ CloniumParameters::CloniumParameters(QWidget *parent)
 
 }
 
-// Create group box for humans
+///
+/// \brief CloniumParameters::createGrpHumans
+/// \return a group box for humans
+///
 QGroupBox *CloniumParameters::createGrpHumans(){
     m_grpHumans = new QGroupBox(tr("Nombre de joueurs :"));
     m_grpHumans->setMaximumHeight(100);
 
-    m_radHum1 = new QRadioButton(tr("&1"));
-    m_radHum1->setObjectName(QString("H1"));
-    m_radHum2 = new QRadioButton(tr("&2"));
-    m_radHum2->setObjectName(QString("H2"));
-    m_radHum3 = new QRadioButton(tr("&3"));
-    m_radHum3->setObjectName(QString("H3"));
-    m_radHum4 = new QRadioButton(tr("&4"));
-    m_radHum4->setObjectName(QString("H4"));
+    m_radHum1 = new QRadioButton(tr("1"));
+    m_radHum1->setObjectName(QString("H0"));
+    m_radHum2 = new QRadioButton(tr("2"));
+    m_radHum2->setObjectName(QString("H1"));
+    m_radHum3 = new QRadioButton(tr("3"));
+    m_radHum3->setObjectName(QString("H2"));
+    m_radHum4 = new QRadioButton(tr("4"));
+    m_radHum4->setObjectName(QString("H3"));
 
+    //the first radio button is checked
     m_radHum1->setChecked(true);
 
+    // add components in the layout
     m_vboxHumans = new QHBoxLayout;
     m_vboxHumans->addWidget(m_radHum1);
     m_vboxHumans->addWidget(m_radHum2);
@@ -92,18 +92,22 @@ QGroupBox *CloniumParameters::createGrpHumans(){
     return m_grpHumans;
 }
 
-// Create group box for AI
+
+///
+/// \brief CloniumParameters::createGrpAI
+/// \return a group box for AI
+///
 QGroupBox *CloniumParameters::createGrpAI(){
     m_grpAI = new QGroupBox(tr("Nombre d'intelligences artificielles :"));
     m_grpAI->setMaximumHeight(100);
 
-    m_radAI0 = new QRadioButton(tr("&0"));
+    m_radAI0 = new QRadioButton(tr("0"));
     m_radAI0->setObjectName(QString("AI0"));
-    m_radAI1 = new QRadioButton(tr("&1"));
+    m_radAI1 = new QRadioButton(tr("1"));
     m_radAI1->setObjectName(QString("AI1"));
-    m_radAI2 = new QRadioButton(tr("&2"));
+    m_radAI2 = new QRadioButton(tr("2"));
     m_radAI2->setObjectName(QString("AI2"));
-    m_radAI3 = new QRadioButton(tr("&3"));
+    m_radAI3 = new QRadioButton(tr("3"));
     m_radAI3->setObjectName(QString("AI3"));
 
     m_radAI1->setChecked(true);
@@ -120,7 +124,11 @@ QGroupBox *CloniumParameters::createGrpAI(){
     return m_grpAI;
 }
 
-// check the number of players before launching the game
+
+///
+/// \brief CloniumParameters::checkNumberPlayers
+/// \return check if the number of players is right, before launching the game
+///
 bool CloniumParameters::checkNumberPlayers(){
 
     bool correct = false;
@@ -138,6 +146,10 @@ bool CloniumParameters::checkNumberPlayers(){
     return correct;
 }
 
+///
+/// \brief CloniumParameters::accessToTeam
+/// \return if we can access to the window of teams
+///
 bool CloniumParameters::accessToTeam(){
     bool access = false;
 
@@ -154,6 +166,11 @@ bool CloniumParameters::accessToTeam(){
     return access;
 }
 
+///
+/// \brief CloniumParameters::setNumberOfPlayers
+/// check which buttons have been clicked, and set the right values in order to
+/// generate the number of textedit for the players
+///
 void CloniumParameters::setNumberOfPlayers(){
     for(unsigned int i=0;i<4;i++){
         QRadioButton *rad_human = findChild<QRadioButton*>(QString("H%1").arg(i));
@@ -161,45 +178,61 @@ void CloniumParameters::setNumberOfPlayers(){
         if(rad_human){
             if (rad_human->isChecked()){
                 QString human=rad_human->text();
-                NbHumanPlayers=human.remove(0,1).toInt(nullptr, 10);
+                NbHumanPlayers=human.toInt(nullptr, 10);
+
             }
         }
 
         if(rad_AI){
             if (rad_AI->isChecked()){
                 QString name=rad_AI->text();
-                NbAIPlayers=name.remove(0,1).toInt(nullptr, 10);
+                NbAIPlayers=name.toInt(nullptr, 10);
             }
         }
 
     }
 }
 
+///
+/// \brief CloniumParameters::onClickTeam
+/// event on click on the team button, to access to the creation of the players and teams in the next window
+///
 void CloniumParameters::onClickTeam(){
 
     if (accessToTeam()){
         if (!checkNumberPlayers()){
 
             setNumberOfPlayers();
-            //QMessageBox::information(this,"Information",  QString( "Nb HUmans : %1 Nb IA :%2 ").arg(NbHumanPlayers).arg(NbAIPlayers) );
             QObject::connect(m_btnTeam, SIGNAL(clicked()), this->parent(), SLOT(goToTeams()));
         }
     }
 }
 
+///
+/// \brief CloniumParameters::onClickIndividual
+/// event on click on the play button, to access to the creation of the players in the next window
+///
 void CloniumParameters::onClickIndividual(){
     if (!checkNumberPlayers()){
 
         setNumberOfPlayers();
+        //QMessageBox::information(this,"Information",  QString( "Nb HUmans : %1 Nb IA :%2 ").arg(NbHumanPlayers).arg(NbAIPlayers) );
         QObject::connect(m_btnIndividual, SIGNAL(clicked()), this->parent(), SLOT(goToIndividual()));
-
     }
 }
 
+///
+/// \brief CloniumParameters::returnNbHumanPlayers
+/// \return the number of humans players chosen thanks to the radio buttons
+///
 unsigned int CloniumParameters::returnNbHumanPlayers(){
     return NbHumanPlayers;
 }
 
+///
+/// \brief CloniumParameters::returnNbHumanPlayers
+/// \return the number of artificial intelligence players chosen thanks to the radio buttons
+///
 unsigned int CloniumParameters::returnNbAIPlayers(){
     return NbAIPlayers;
 }
