@@ -13,7 +13,6 @@ GUI_Grid::GUI_Grid(QWidget *parent)
     this->setParent(parent);
     m_layout = new QGridLayout;
 
-    //m_layout->setMargin(50);
     this->setLayout(m_layout);
 
 
@@ -37,6 +36,7 @@ GUI_Grid::GUI_Grid(QWidget *parent)
             m_layout->setVerticalSpacing(3);
             m_layout->setHorizontalSpacing(3);
             m_layout->setAlignment(Qt::AlignHCenter);
+
         }
     }
 
@@ -48,12 +48,23 @@ GUI_Grid::GUI_Grid(QWidget *parent)
 
 }
 
-void GUI_Grid::test(){
+void GUI_Grid::onClickButtonGrid(){
     QPushButton* btnSender = qobject_cast<QPushButton*>(sender());
-    btnSender->setIcon(QIcon(":/images/green_1.png"));
+
+    QPixmap pix(":/images/green_1.png");
+    QIcon ButtonIcon(pix);
+    QMatrix m;
+    m.rotate(10);
+    pix = pix.transformed(m);
+    btnSender->setIcon(ButtonIcon);
+    btnSender->setIconSize(QSize(30,30));
+    // btnSender->setIconSize(pix.rect().size());
+    //btnSender->setIcon(QIcon(":/images/green_1.png"));
 
 
     //btnSender->setIcon(QIcon(":/images/green_2.png"));
 
 
 }
+
+

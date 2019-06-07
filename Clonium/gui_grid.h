@@ -14,7 +14,7 @@ public:
     GUI_Grid(QWidget *parent = nullptr);
 
 private slots:
-    void test();
+    void onClickButtonGrid();
 
 private:
 
