@@ -14,7 +14,6 @@ public:
 
     inline void SetOwner(Player* const player) {m_owner = player;}
     inline Player* GetOwner(void) const {return m_owner;}
-
 private:
     Player* m_owner;
 

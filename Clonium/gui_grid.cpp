@@ -52,7 +52,7 @@ GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
 
                 btn->setObjectName(QString("btn%1%2").arg(i).arg(j));
                 connect(btn, SIGNAL(clicked()), this, SLOT(onClickButtonGrid()));
-                connect(btn, SIGNAL(clicked()), this, SLOT(Split()));
+                connect(btn, SIGNAL(clicked()), this, SLOT(onClickButton()));
 
                 //add button
                 m_layout->addWidget(btn,static_cast<int>(i),j);
@@ -146,29 +146,56 @@ QString GUI_Grid::chooseColor(uint id, uint niveau){
     return QString::fromStdString(chemin);
 }
 
-void GUI_Grid::Split()
+void GUI_Grid::onClickButton()
 {
-    QPushButton* btnSender = qobject_cast<QPushButton*>(sender());
 
-    btnSender->objectName();
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+    // Run Resursive Split;
+    Split(button);
+
+}
+
+void GUI_Grid::Split(const QPushButton* button)
+{
+    /*
+    ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
+
+    button->objectName();
     uint* row = new uint();
     uint* column = new uint();
 
-    GetRowAndColumnFromQButtonName(btnSender, row, column);
-    ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
+    GetRowAndColumnFromQButtonName(button, row, column);
+    CellContainer* container = CloniumGame.GetGrid()->GetElementAt(*row, *column);
+    CloniumPawn* pawn = dynamic_cast<CloniumPawn*>(container->GetPawn());
+    if(pawn->IncreaseLevel() == pawn->SplitLevel)
+    {
+        std::vector<CellContainerIndex*>* indexs = CloniumGame.GetGrid()->GetAdjacent(CloniumGame.GetGrid()->GetElementAt(*row,*column));
+        for(CellContainerIndex* index : *indexs)
+        {
+            CloniumPawn* pawn = dynamic_cast<CloniumPawn*>(CloniumGame.GetGrid()->GetElementAt(index->row, index->column)->GetPawn());
+
+            QPushButton* button = this->findChild<QPushButton*>(QString("btn%1%2").arg(index->row).arg(index->column));
+            button->setStyleSheet("border:0px; border-radius:5px; background-color:blue;");
+        }
+    }
+
     std::vector<CellContainerIndex*>* indexs = CloniumGame.GetGrid()->GetAdjacent(CloniumGame.GetGrid()->GetElementAt(*row,*column));
     for(CellContainerIndex* index : *indexs)
     {
+        CloniumPawn* pawn = dynamic_cast<CloniumPawn*>(CloniumGame.GetGrid()->GetElementAt(index->row, index->column)->GetPawn());
+        //if(pawn->IncreaseLevel() == 4);
+            //Split();
         QPushButton* button = this->findChild<QPushButton*>(QString("btn%1%2").arg(index->row).arg(index->column));
         button->setStyleSheet("border:0px; border-radius:5px; background-color:blue;");
     }
+    */
 }
 
 
-void GUI_Grid::GetRowAndColumnFromQButtonName(QPushButton* button, uint* row, uint* column)
+void GUI_Grid::GetRowAndColumnFromQButtonName(const QPushButton* button, uint* row, uint* column)
 {
     QString name = button->objectName();
     *column = static_cast<uint>(name.mid(name.length()-1,1).toInt());
     *row = static_cast<uint>(name.mid(name.length()-2,1).toInt());
-
 }
+

@@ -12,6 +12,11 @@ public:
 
     inline uint GetLevel() const {return m_level;}
     inline void SetLevel(uint level) {m_level = level;}
+    inline uint IncreaseLevel()
+    {
+        m_level = ((m_level+1) % SplitLevel)+1;
+        return GetLevel();
+    };
 
     static uint const SplitLevel = 4;
 
