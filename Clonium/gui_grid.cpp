@@ -35,11 +35,14 @@ GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
                 {
                     btn->setStyleSheet("border:0px; border-radius:5px; background-color:purple;");
 
+
                     if(CloniumPawn* pawn = dynamic_cast<CloniumPawn*>(container->GetPawn()))
                     {
+                        UpdateImageSource(btn);
                         if((pawn->GetOwner() == nullptr))
                         {
                             btn->setStyleSheet("border:0px; border-radius:5px; background-color:green;");
+
                         }
                     }
                 }
@@ -86,6 +89,7 @@ void GUI_Grid::onClickButtonGrid(){
     pix = pix.transformed(m);
     btnSender->setIcon(ButtonIcon);
     btnSender->setIconSize(QSize(30,30));
+    UpdateImageSource(btnSender);
 }
 
 void GUI_Grid::createFirstButton(uint i, uint j){
@@ -199,3 +203,28 @@ void GUI_Grid::GetRowAndColumnFromQButtonName(const QPushButton* button, uint* r
     *row = static_cast<uint>(name.mid(name.length()-2,1).toInt());
 }
 
+CloniumPawn* GUI_Grid::GetPawnLinkedToQPushButton(const QPushButton* button)
+{
+    return dynamic_cast<CloniumPawn*>(GetCellContainerLinkedToQPushButton(button)->GetPawn());
+}
+
+// Permet de récupérer le CellContainer liée à un QPushButton (il peut être  "nullptr")
+CellContainer* GUI_Grid::GetCellContainerLinkedToQPushButton(const QPushButton* button)
+{
+    ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
+    uint* row = new uint();
+    uint* column = new uint();
+
+    GetRowAndColumnFromQButtonName(button, row, column);
+
+    return CloniumGame.GetGrid()->GetElementAt(*row, *column);
+}
+
+void GUI_Grid::UpdateImageSource(QPushButton* button)
+{
+    CloniumPawn* pawn = GetPawnLinkedToQPushButton(button);
+        if(pawn != nullptr)
+        {
+            button->setIcon(QIcon(chooseColor(1, pawn->GetLevel())));
+        }
+}
