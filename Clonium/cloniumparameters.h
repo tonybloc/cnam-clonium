@@ -10,6 +10,11 @@
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QRadioButton>
+#include <QPair>
+#include <QString>
+
+#include "managergames.h"
+#include "vector"
 
 class CloniumParameters : public QWidget
 {
@@ -17,32 +22,29 @@ class CloniumParameters : public QWidget
 
 public:
     CloniumParameters(QWidget *parent = nullptr);
-    unsigned int returnNbHumanPlayers();
-    unsigned int returnNbAIPlayers();
+    uint GetNbHumanSelected() const;
+    uint GetNbIASelected() const;
 
 // onclick events on the buttons
 private slots:
-    void onClickTeam();
+    //void onClickTeam();
     void onClickIndividual();
 
 private:
+
+    QMap<QString, AvailableCloniumGrid>* ShapOption;
+
     //title
     QLabel *m_lblCloParams;
 
     //number of players
+    QMap<uint,QRadioButton*>* m_RadioButtonsHumanSelector;
     QGroupBox *m_grpHumans;
-    QRadioButton *m_radHum1;
-    QRadioButton *m_radHum2;
-    QRadioButton *m_radHum3;
-    QRadioButton *m_radHum4;
     QHBoxLayout *m_vboxHumans;
 
-    //number of AI players
+    //number of AI players    
+    QMap<uint,QRadioButton*>* m_RadioButtonsIASelector;
     QGroupBox *m_grpAI;
-    QRadioButton *m_radAI0;
-    QRadioButton *m_radAI1;
-    QRadioButton *m_radAI2;
-    QRadioButton *m_radAI3;
     QHBoxLayout *m_vboxAI;
 
     // grid shape
@@ -53,7 +55,7 @@ private:
     QLabel *m_lblRound;
 
     //button to create the teams
-    QPushButton *m_btnTeam;
+    //QPushButton *m_btnTeam;
     QPushButton *m_btnIndividual;
 
     //layout of the window

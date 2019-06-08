@@ -1,11 +1,4 @@
 #include "gui_team.h"
-#include "iostream"
-#include <QMessageBox>
-#include "cloniumgame.h"
-#include "cloniumplayer.h"
-#include "cloniumia.h"
-#include "cloniumteam.h"
-#include "cloniumparameters.h"
 
 const int NB_PLAYERS = 7;
 const int NB_TEAMS = 2;
@@ -100,7 +93,7 @@ GUI_Team::GUI_Team(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
 void GUI_Team::launchGame(){
 
     // Create Clonium game
-    CloniumGame& g = CloniumGame::Instance();
+    //CloniumGame& g = CloniumGame::Instance();
 
     // Create teams
     for(unsigned int i=0;i<NB_TEAMS;i++){
@@ -109,7 +102,7 @@ void GUI_Team::launchGame(){
             QString teamName1=le->text();
             std::string name=teamName1.toStdString();
 
-            CloniumTeam p(i, name);
+            //CloniumTeam p(i, name);
 
         }
     }
@@ -124,8 +117,8 @@ void GUI_Team::launchGame(){
                 QString teamName1=le->text();
                 std::string xMax=teamName1.toStdString();
 
-                CloniumPlayer p(i, xMax);
-                g.addPlayer(p);
+                //CloniumPlayer p(i, xMax);
+                //g.addPlayer(p);
             }
         }
         else {
@@ -135,8 +128,8 @@ void GUI_Team::launchGame(){
                 QString teamName1=le->text();
                 std::string xMax=teamName1.toStdString();
 
-                CloniumIA p(i, xMax);
-                g.addPlayer(p);
+                //CloniumIA p(i, xMax);
+                //g.addPlayer(p);
             }
         }
 

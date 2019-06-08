@@ -21,7 +21,7 @@ public slots:
     void goToAbout();
     void goToCloniumParams();
     void goToTeams();
-    void goToIndividual();
+    void goToIndividual(uint nbHuman, uint nbIA);
     void goToGrid();
     void goToCloniumRules();
     void goToGridSaved();

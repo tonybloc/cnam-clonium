@@ -8,7 +8,7 @@
 #include <QLabel>
 
 #include "cloniumparameters.h"
-
+#include "managergames.h"
 
 class CloniumMenu : public QWidget
 {

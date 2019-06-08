@@ -13,6 +13,8 @@ const string GREEN = ":/Ressources/Clonium/Images/Ressources/Clonium/Images/gree
 
 GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
 {
+    ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
+
     setFixedSize(500, 700);
     setStyleSheet("background-color: blue;");
 
@@ -21,54 +23,46 @@ GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
 
     this->setLayout(m_layout);
 
+    CloniumGame.GetGrid()->ShowGrid();
 
-    for (uint i = 0; i < NB_ROWS; i++) {
-        for (uint j = 0; j < NB_COLUMNS; j++) {
-            btn = new QPushButton;
+    for (uint i = 0; i < CloniumGame.GetGrid()->GetNumberOfRows(); i++) {
+        for (uint j = 0; j < CloniumGame.GetGrid()->GetNumberOfColumns(); j++) {
+            QPushButton *btn = new QPushButton;
 
-            if (nbHumans+nbAI == 2){
-                if (i == 1 && j == 1){
-                    createFirstButton(i,j);
-                }
-                else if (i == NB_ROWS -2  && j == NB_COLUMNS -2){
-                    createFirstButton(i,j);
-                }
-                else{
-                    createGridButtons(i,j);
-                }
-            }
+            if(CellContainer* container = CloniumGame.GetGrid()->GetElementAt(i, j))
+            {
+                if(container->GetIsActive())
+                {
+                    btn->setStyleSheet("border:0px; border-radius:5px; background-color:purple;");
 
-            if (nbHumans+nbAI == 3){
-                if (i == 1 && j == 1){
-                    createFirstButton(i,j);
+                    if(CloniumPawn* pawn = dynamic_cast<CloniumPawn*>(container->GetPawn()))
+                    {
+                        if((pawn->GetOwner() == nullptr))
+                        {
+                            btn->setStyleSheet("border:0px; border-radius:5px; background-color:green;");
+                        }
+                    }
                 }
-                else if (i == NB_ROWS -2  && j == NB_COLUMNS -2){
-                    createFirstButton(i,j);
+                else
+                {
+                    btn->setStyleSheet("border:0px; border-radius:5px; background-color:gray;");
                 }
-                else if (i == 1 && j == NB_COLUMNS -2){
-                    createFirstButton(i,j);
-                }
-                else{
-                    createGridButtons(i,j);
-                }
-            }
+                btn->setFixedSize(QSize(35,35));
+                btn->setIconSize(QSize(33,33));
 
-            if (nbHumans+nbAI == 4){
-                if (i == 1 && j == 1){
-                    createFirstButton(i,j);
-                }
-                else if (i == NB_ROWS -2  && j == NB_COLUMNS -2){
-                    createFirstButton(i,j);
-                }
-                else if (i == 1 && j == NB_COLUMNS -2){
-                    createFirstButton(i,j);
-                }
-                else if (i == NB_ROWS -2 && j == 1){
-                    createFirstButton(i,j);
-                }
-                else{
-                    createGridButtons(i,j);
-                }
+                btn->setObjectName(QString("btn%1%2").arg(i).arg(j));
+                connect(btn, SIGNAL(clicked()), this, SLOT(test()));
+
+                //add button
+                m_layout->addWidget(btn,static_cast<int>(i),j);
+                // set stretch
+                m_layout->setRowStretch(static_cast<int>(i)+2,2);
+                m_layout->setColumnStretch(static_cast<int>(j)+2,2);
+                // space betwwen lines and columns
+                m_layout->setVerticalSpacing(1);
+                m_layout->setHorizontalSpacing(1);
+                m_layout->setAlignment(Qt::AlignHCenter);
+
             }
         }
     }
@@ -94,6 +88,7 @@ void GUI_Grid::onClickButtonGrid(){
 }
 
 void GUI_Grid::createFirstButton(uint i, uint j){
+    /*
     btnPlayer = new QPushButton;
     btnPlayer->setIcon(QIcon(chooseColor(1, 3)));
     btnPlayer->setStyleSheet("border:0px; border-radius:5px; background-color:purple;");
@@ -103,10 +98,12 @@ void GUI_Grid::createFirstButton(uint i, uint j){
 
     connect(btnPlayer, SIGNAL(clicked()), this, SLOT(onClickButtonGrid()));
     m_layout->addWidget(btnPlayer,i,j);
+    */
 }
 
 void GUI_Grid::createGridButtons(uint i, uint j){
 
+    /*
     btn->setStyleSheet("border:0px; border-radius:5px; background-color:purple;");
     btn->setFixedSize(QSize(this->size().width()/NB_COLUMNS-5,this->size().width()/NB_COLUMNS-5));
     btn->setIconSize(QSize(this->size().width()/NB_COLUMNS-7,this->size().width()/NB_COLUMNS-7));
@@ -121,6 +118,7 @@ void GUI_Grid::createGridButtons(uint i, uint j){
     m_layout->setVerticalSpacing(3);
     m_layout->setHorizontalSpacing(3);
     m_layout->setAlignment(Qt::AlignHCenter);
+    */
 }
 
 QString GUI_Grid::chooseColor(uint id, uint niveau){

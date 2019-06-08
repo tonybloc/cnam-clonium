@@ -7,6 +7,11 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QMessageBox>
+
+#include "iostream"
+#include "cloniumparameters.h"
+#include "managergames.h"
 
 class GUI_Team : public QWidget
 {

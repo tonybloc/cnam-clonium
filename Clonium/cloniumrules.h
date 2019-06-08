@@ -8,6 +8,7 @@
 #include <QVBoxLayout>
 
 #include "cloniummenu.h"
+#include "managergames.h"
 
 class cloniumrules: public QWidget
 {

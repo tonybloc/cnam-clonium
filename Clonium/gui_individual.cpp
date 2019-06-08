@@ -1,15 +1,12 @@
 #include "gui_individual.h"
-#include "cloniumplayer.h"
-#include "cloniumia.h"
-#include "cloniumgame.h"
+#include "CloniumModels/cloniumplayer.h"
+#include "CloniumModels/cloniumia.h"
+#include "managergames.h"
 
-unsigned int static NB_HUMANS = 0;
-unsigned int static NB_AI = 0;
 
 GUI_Individual::GUI_Individual(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
+    : m_numberOfHumans(nbHumans), m_numberOfIA(nbAI)
 {
-    NB_HUMANS = nbHumans;
-    NB_AI = nbAI;
     int b = 0;
 
     setFixedSize(500, 700);
@@ -23,38 +20,46 @@ GUI_Individual::GUI_Individual(QWidget *parent, unsigned int nbHumans, unsigned 
     m_lblCreatePlayers->setFrameShadow(QFrame::Raised);
     m_lblCreatePlayers->setAlignment(Qt::AlignHCenter);
 
-    for (unsigned int i = 0; i < nbHumans+nbAI; i++) {
 
-        QLabel *lbl = new QLabel();
-        QLineEdit *edit = new QLineEdit();
+    m_PlayerInputs = new QList<Inputs*>();
+    for (uint i = 0; i < GetNumberOfPlayer(); i++) {
 
-        if (i < nbHumans){
+        Inputs* fields = new Inputs();
+        fields->m_label = new QLabel();
+        fields->m_lineEdite = new QLineEdit();
 
-            lbl -> setText(QString("Joueur n°%1 :").arg(i+1));
-            lbl->setFont(QFont("Commic Sans MS", 16));
-            lbl->setStyleSheet("QLabel { color : white; }");
+        // Generate input fields specific to Humans
+        if (i < GetNumberOfHumans())
+        {
+            fields->m_label->setText(QString("Joueur n°%1 :").arg(i+1));
+            fields->m_label->setFont(QFont("Commic Sans MS", 16));
+            fields->m_label->setStyleSheet("QLabel { color : white; }");
 
-            edit->setObjectName(QString("H%1").arg(i));
+            fields->m_lineEdite->setObjectName(QString("H%1").arg(i));
         }
+        // Generate input fields specific to Humans
         else {
-            lbl -> setText(QString("Bot n°%1 :").arg(b+1));
-            lbl->setFont(QFont("Commic Sans MS", 16));
-            lbl->setStyleSheet("QLabel { color : white; }");
+            fields->m_label->setText(QString("Bot n°%1 :").arg(b+1));
+            fields->m_label->setFont(QFont("Commic Sans MS", 16));
+            fields->m_label->setStyleSheet("QLabel { color : white; }");
 
-            edit->setObjectName(QString("AI%1").arg(b));
-            edit->setText(QString("AI%1").arg(b+1));
-            edit->setEnabled(false);
+            fields->m_lineEdite->setObjectName(QString("AI%1").arg(b));
+            fields->m_lineEdite->setText(QString("AI%1").arg(b+1));
+            fields->m_lineEdite->setEnabled(false);
             b++;
         }
-        m_layout->addWidget(lbl,i+1,0);
-        m_layout->addWidget(edit,i+1,1);
+
+
+        m_layout->addWidget(fields->m_label, static_cast<int>(i+1), 0);
+        m_layout->addWidget(fields->m_lineEdite, static_cast<int>(i+1), 1);
+
+        m_PlayerInputs->append(fields);
     }
 
     m_btnPlay = new QPushButton("C'est parti !", this);
     m_btnPlay->setFont(QFont("Commic Sans MS", 16));
-    connect(m_btnPlay, SIGNAL(clicked()), this, SLOT(getPlayersName()));
 
-    connect(m_btnPlay, SIGNAL(clicked()), this->parent(), SLOT(goToGrid()));
+    connect(m_btnPlay, SIGNAL(clicked()), this, SLOT(startGame()));
 
     m_layout->addWidget(m_lblCreatePlayers,0,0,1,2);
     m_layout->addWidget(m_btnPlay,5,0,1,2);
@@ -62,35 +67,37 @@ GUI_Individual::GUI_Individual(QWidget *parent, unsigned int nbHumans, unsigned 
     this->setLayout(m_layout);
 }
 
-void GUI_Individual::getPlayersName(){
-    CloniumGame& g = CloniumGame::Instance();
-    int a = 0;
+void GUI_Individual::startGame()
+{
+    ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
 
-    for(unsigned int i=0;i<NB_HUMANS+NB_AI;i++){
-
-        if (i<NB_HUMANS){
-            QLineEdit *le = findChild<QLineEdit*>(QString("H%1").arg(i));
-            if(le){
-                QString n=le->text();
-                std::string name=n.toStdString();
-
-                CloniumPlayer p(i, name);
-                g.addPlayer(p);
-
+    uint index = 0;
+    QList<Inputs*>::iterator it;
+    for(it = m_PlayerInputs->begin(); it != m_PlayerInputs->end(); it++)
+    {
+        if ( index < GetNumberOfHumans())
+        {
+            if((*it)->m_lineEdite != nullptr)
+            {
+                std::string name = (*it)->m_lineEdite->text().toStdString();
+                std::cout << "Creation d'un humain" << std::endl;
+                CloniumGame.AddCloniumPlayer(new CloniumPlayer(index, name));
             }
         }
-        else {
-
-            QLineEdit *le = findChild<QLineEdit*>(QString("AI%1").arg(a));
-            if(le){
-                QString n=le->text();
-                std::string name=n.toStdString();
-
-                CloniumIA p(i, name);
-                g.addPlayer(p);
-                a++;
+        else
+        {
+            if((*it)->m_lineEdite != nullptr)
+            {
+                std::string name = (*it)->m_lineEdite->text().toStdString();
+                std::cout << "Creation d'un IA" << std::endl;
+                CloniumGame.AddCloniumPlayer(new CloniumIA(index, name));
             }
         }
+        index++;
     }
+
+    std::cout << "BEFOR GOTOGRID" << std::endl;
+    CloniumGame.GetGrid()->ShowGrid();
+    QMetaObject::invokeMethod(this->parent(), "goToGrid");
 }
 

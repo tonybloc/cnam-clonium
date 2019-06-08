@@ -8,6 +8,9 @@
 
 using namespace std;
 
+#include "managergames.h"
+#include "managergames.h"
+
 class GUI_Grid : public QWidget
 {
        Q_OBJECT

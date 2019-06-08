@@ -8,6 +8,8 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
+#include "managergames.h"
+
 class MainMenu : public QWidget
 {
 public:

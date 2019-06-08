@@ -7,7 +7,7 @@ WidgetManager::WidgetManager(QWidget *parent) : QMainWindow(parent)
     setFixedSize(500,700);
     setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,this->size(), qApp->desktop()->availableGeometry()));
 
-    QPixmap img(":/images/modern_background.jpg");
+    QPixmap img(":/Ressources/Ressources/modern_background.jpg");
     img = img.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, img);
@@ -25,11 +25,11 @@ WidgetManager::WidgetManager(QWidget *parent) : QMainWindow(parent)
     cloParams = new CloniumParameters(this);
     cloParams->hide();
 
+    cloRules = new cloniumrules(this);
+    cloRules->hide();    
+
     cloGrid = new GUI_Grid(this);
     cloGrid->hide();
-
-    cloRules = new cloniumrules(this);
-    cloRules->hide();
 
 }
 
@@ -61,8 +61,8 @@ void WidgetManager::goToCloniumParams(){
 }
 
 void WidgetManager::goToTeams(){
-    unsigned int nbHumans = cloParams->returnNbHumanPlayers();
-    unsigned int nbAI = cloParams->returnNbAIPlayers();
+    uint nbHumans = cloParams->GetNbHumanSelected();
+    uint nbAI = cloParams->GetNbIASelected();
     cloTeams = new GUI_Team(this, nbHumans, nbAI);
 
     this->WidgetActif=cloTeams;
@@ -70,21 +70,16 @@ void WidgetManager::goToTeams(){
     cloTeams->show();
 }
 
-void WidgetManager::goToIndividual(){
-    unsigned int nbHumans = cloParams->returnNbHumanPlayers();
-    unsigned int nbAI = cloParams->returnNbAIPlayers();
+void WidgetManager::goToIndividual(uint nbHuman, uint nbAI){
 
-    cloIndi = new GUI_Individual(this, nbHumans, nbAI);
+    cloIndi = new GUI_Individual(this, nbHuman, nbAI);
     this->WidgetActif=cloIndi;
     cloParams->hide();
     cloIndi->show();
 }
 
 void WidgetManager:: goToGrid(){
-    unsigned int nbHumans = cloParams->returnNbHumanPlayers();
-    unsigned int nbAI = cloParams->returnNbAIPlayers();
-
-    cloGrid = new GUI_Grid(this, nbHumans, nbAI);
+    cloGrid = new GUI_Grid(this);
     this->WidgetActif=cloGrid;
     cloIndi->hide();
     cloGrid->show();
