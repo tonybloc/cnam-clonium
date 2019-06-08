@@ -8,13 +8,18 @@ class CellContainer
 public:
 
     CellContainer();
-    CellContainer(Pawn* p);
-    virtual ~CellContainer();
+    CellContainer(Pawn* pawn);
+    CellContainer(const CellContainer* container);
+    ~CellContainer();
 
-    void GetPawn(void);
-    void RemovePawn(void);
+    inline Pawn* GetPawn(void) const {return m_Pawn;}
+    inline void SetPawn(Pawn* const pawn) {m_Pawn = pawn;}
+    inline bool GetIsActive(void) const {return m_isActive;}
+    inline void SetIsActive(bool value) {m_isActive = value;}
+
 
 private:
+    bool m_isActive;
     Pawn* m_Pawn;
 
 };

@@ -1,24 +1,41 @@
 #include "game.h"
 
-Game::Game(std::string title, size_t min_player, size_t max_player) :
-    m_Title(title), m_MinimumOfPlayers(min_player), m_MaximumOfPlayers(max_player)
-{}
-
-Game::~Game(){}
-
-void Game::addPlayer(const Player& p)
+Game::Game(std::string title, uint min_player, uint max_player)
+    : m_Grid(nullptr), m_Title(title), m_MinimumOfPlayers(min_player), m_MaximumOfPlayers(max_player)
 {
-    m_Players.push(p);
+    std::cout << "GAME" << std::endl;
+    m_Players = new std::vector<Player*>();
 }
 
-Player& Game::nextPlayer(void)
+Game::Game(std::string title, uint min_player, uint max_player, Grid* grid)
+    : m_Grid(grid), m_Title(title), m_MinimumOfPlayers(min_player), m_MaximumOfPlayers(max_player)
 {
-    if(m_Players.empty())
-        throw std::out_of_range("ERREUR : Aucun joueur dans la partie");
-    else {
-        Player& p = m_Players.front();
-        m_Players.pop();
-        m_Players.push(p);
-        return m_Players.back();
-    }
+    std::cout << "GAME" << std::endl;
+    m_Players = new std::vector<Player*>();
 }
+
+Game::~Game(){
+    //delete m_Grid;
+    delete m_Players;
+}
+
+void Game::AddPlayer(Player* p)
+{
+    m_Players->push_back(p);
+}
+void Game::RemovePlayer(const Player* p)
+{
+    std::vector<Player*>::iterator it = std::find(m_Players->begin(), m_Players->end(), p);
+    m_Players->erase(it);
+}
+
+
+Grid* Game::GetGrid() const
+{
+    return m_Grid;
+}
+void Game::SetGrid(Grid* const grid)
+{
+    m_Grid = grid;
+}
+

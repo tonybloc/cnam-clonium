@@ -7,8 +7,8 @@ class CloniumTeam : public Team
 {
 public:
     CloniumTeam(unsigned int id, std::string name);
-
-    void calculateScoreTeam();
+    ~CloniumTeam();
+    //void calculateScoreTeam();
 private:
     unsigned int m_TeamScore;
 };

@@ -13,11 +13,11 @@ Team::~Team()
 
 }
 
-void Team:: addPlayer(Player& p){
-     m_ListOfPlayers.push_back(p);
-}
+//void Team:: addPlayer(Player& p){
+     //m_ListOfPlayers.push_back(p);
+//}
 
-void Team::removePlayer(Player& p){
+//void Team::removePlayer(Player& p){
     /*if (m_ListOfPlayers.size() > 0){
 
         std::vector<Player>::iterator it = std::find(m_ListOfPlayers.begin(), m_ListOfPlayers.end(), p);
@@ -30,8 +30,8 @@ void Team::removePlayer(Player& p){
             printf("Impossible de supprimer le joueur");
         }
     }*/
-}
+//}
 
-Player& Team::getPlayerAt(unsigned int key){
-   return m_ListOfPlayers.at(key);
-}
+//Player& Team::getPlayerAt(unsigned int key){
+   //return m_ListOfPlayers.at(key);
+//}

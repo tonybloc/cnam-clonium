@@ -2,8 +2,10 @@
 
 Grid::Grid()
 {
-
+    std::cout << "GRID" << std::endl;
 }
+
+
 Grid::~Grid()
 {
 

@@ -6,10 +6,10 @@ using namespace  std;
 const int NB_ROWS = 10;
 const int NB_COLUMNS = 10;
 
-const string RED = ":/images/red_";
-const string BLUE = ":/images/blue_";
-const string GREY = ":/images/grey_";
-const string GREEN = ":/images/green_";
+const string RED = ":/Ressources/Clonium/Images/Ressources/Clonium/Images/red_";
+const string BLUE = ":/Ressources/Clonium/Images/Ressources/Clonium/Images/blue_";
+const string GREY = ":/Ressources/Clonium/Images/Ressources/Clonium/Images/grey_";
+const string GREEN = ":/Ressources/Clonium/Images/Ressources/Clonium/Images/green_";
 
 GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
 {

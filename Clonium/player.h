@@ -4,23 +4,35 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
-
-#include "./pawn.h"
+#include <iostream>
 
 class Player
 {
 public:
-    Player(unsigned int id, std::string name);
-    virtual ~Player() ;
+    Player(uint id, std::string name);
+    virtual ~Player() = 0;
 
-    void addPawn(Pawn& p);
-    void removePawn(Pawn& p);
-    Pawn& getPawnAt(unsigned int key);
+    inline uint GetId(void) const {return m_Id;}
+    inline std::string GetName(void) const {return m_Name;}
+    inline void SetName(std::string name) {m_Name = name;}
 
-private:
-    std::vector<Pawn> m_ListOfPawns;
-    unsigned int m_Id;
+    friend bool operator==(Player const& a, Player const& b)
+    {
+        return (a.m_Id == b.m_Id && a.m_Name == b.m_Name);
+    }
+    friend std::ostream& operator<<(std::ostream& os, const Player& p)
+    {
+        return os << p.m_Id << " " << p.m_Name;
+    }
+    friend std::istream& operator>>(std::istream& is, Player& p)
+    {
+        return is >> p.m_Id >> p.m_Name;
+    }
+
+protected:
+    uint m_Id;
     std::string m_Name;
+
 };
 
 #endif // PLAYER_H

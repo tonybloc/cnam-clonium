@@ -4,25 +4,25 @@
 #include "stdlib.h"
 #include "./grid.h"
 
-class SquareGrid : Grid
+class SquareGrid : public Grid
 {
 public:
-    SquareGrid(uint numberOfRow, uint numberOfColumn);
+    SquareGrid(uint rows, uint columns);
     virtual ~SquareGrid() = 0;
 
-    inline uint getNumberOfColumn(void) const {return this->m_NumberOfColumn;}
-    inline uint getNumberOfRow(void) const {return this->m_NumberOfRow; }
+    virtual void ShowGrid();
 
-    //CellContainer& getContainerAt(uint index);
-    void FillContainer(CellContainer& container, Pawn& pawn);
-    void LoadListOfContainer(std::string filePath);
+    void InitializeCellContainers(uint row, uint column);
+    inline std::vector<std::vector<CellContainer*>*>* GetCellsContainers() const {return m_CellContainers;}
+    inline uint GetNumberOfColumns(void) const {return this->m_columns;}
+    inline uint GetNumberOfRows(void) const {return this->m_rows; }
+    CellContainer* GetElementAt(uint row, uint column);
+    void ClearContainers(void);
 
-    uint ConvertIndexToRowAndColumn(uint index);
-    uint ConvertRowAndColumnToIndex(uint row, uint column);
-
-private:
-    uint m_NumberOfRow;
-    uint m_NumberOfColumn;
+protected:
+    std::vector<std::vector<CellContainer*>*>* m_CellContainers;
+    uint m_rows;
+    uint m_columns;
 };
 
 #endif // SQUAREGRID_H

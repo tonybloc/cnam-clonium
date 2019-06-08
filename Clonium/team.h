@@ -12,9 +12,9 @@ public:
     Team(unsigned int id, std::string name);
     virtual ~Team() =0;
 
-    virtual void addPlayer(Player& p);
-    virtual void removePlayer(Player& p);
-    virtual Player& getPlayerAt(unsigned int key);
+    //virtual void addPlayer(Player& p);
+    //virtual void removePlayer(Player& p);
+    //virtual Player& getPlayerAt(unsigned int key);
 
 private:
     unsigned int m_TeamId;

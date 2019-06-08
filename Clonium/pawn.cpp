@@ -1,19 +1,12 @@
 #include "pawn.h"
 
-Pawn::Pawn(unsigned int id, std::string color) :
-    m_Id(id),
-    m_Color(color)
+Pawn::Pawn()
 {
-
-}
-Pawn::Pawn(std::string color) :
-    m_Color(color)
-{
-    findNextId();
+    m_owner = nullptr;
 }
 
 Pawn::~Pawn()
 {
-
+    //m_owner = new(nullptr);
 }
 

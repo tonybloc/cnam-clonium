@@ -4,32 +4,20 @@
 #include <stdlib.h>
 #include <string>
 
+#include "player.h"
+
 class Pawn
 {
 public:
-    /* Constructeurs */
-    Pawn(unsigned int id, std::string color);
-    Pawn(std::string color);
+    Pawn();
+    virtual ~Pawn() = 0;
 
-    /* Destructeur */
-    virtual ~Pawn();
-
-    /* Getters */
-    inline unsigned int getId() const {return m_Id;}
-    inline std::string getColor() const {return m_Color;}
-
-    /* Setters */
-    inline void setId(unsigned int id) {this->m_Id = id;}
-    inline void setColor(std::string color) {this->m_Color = color; }
+    inline void SetOwner(Player* const player) {m_owner = player;}
+    inline Player* GetOwner(void) const {return m_owner;}
 
 private:
-    /* Variables private */
-    unsigned int m_Id;
-    std::string m_Color;
-    unsigned int m_indexOfId;
+    Player* m_owner;
 
-    /* Methode private */
-    inline void findNextId() { this->m_indexOfId += 1; setId(this->m_indexOfId);}
 
 };
 

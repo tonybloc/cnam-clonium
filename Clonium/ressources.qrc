@@ -1,31 +1,37 @@
 <!DOCTYPE RCC>
 <RCC>
-<qresource prefix="/images">
-<file>./modern_background.jpg</file>
-<file>./bot.png</file>
-<file>./human.png</file>
-
-<file>./green_1.png</file>
-<file>./green_2.png</file>
-<file>./green_3.png</file>
-<file>./green_4.png</file>
-
-<file>./red_1.png</file>
-<file>./red_2.png</file>
-<file>./red_3.png</file>
-<file>./red_4.png</file>
-
-<file>./blue_1.png</file>
-<file>./blue_2.png</file>
-<file>./blue_3.png</file>
-<file>./blue_4.png</file>
-
-<file>./grey_1.png</file>
-<file>./grey_2.png</file>
-<file>./grey_3.png</file>
-<file>./grey_4.png</file>
-
-<file>./save.png</file>
-
-</qresource>
+    <qresource prefix="/Ressources">
+        <file>Ressources/modern_background.jpg</file>
+    </qresource>
+    <qresource prefix="/Ressources/Clonium"/>
+    <qresource prefix="/Ressources/Clonium/Images">
+        <file>Ressources/Clonium/Images/blue_1.png</file>
+        <file>Ressources/Clonium/Images/blue_2.png</file>
+        <file>Ressources/Clonium/Images/blue_3.png</file>
+        <file>Ressources/Clonium/Images/blue_4.png</file>
+        <file>Ressources/Clonium/Images/blue_5.png</file>
+        <file>Ressources/Clonium/Images/bot.png</file>
+        <file>Ressources/Clonium/Images/green_1.png</file>
+        <file>Ressources/Clonium/Images/green_2.png</file>
+        <file>Ressources/Clonium/Images/green_3.png</file>
+        <file>Ressources/Clonium/Images/green_4.png</file>
+        <file>Ressources/Clonium/Images/green_5.png</file>
+        <file>Ressources/Clonium/Images/grey_1.png</file>
+        <file>Ressources/Clonium/Images/grey_2.png</file>
+        <file>Ressources/Clonium/Images/grey_3.png</file>
+        <file>Ressources/Clonium/Images/grey_4.png</file>
+        <file>Ressources/Clonium/Images/grey_5.png</file>
+        <file>Ressources/Clonium/Images/human.png</file>
+        <file>Ressources/Clonium/Images/red_1.png</file>
+        <file>Ressources/Clonium/Images/red_2.png</file>
+        <file>Ressources/Clonium/Images/red_3.png</file>
+        <file>Ressources/Clonium/Images/red_4.png</file>
+        <file>Ressources/Clonium/Images/red_5.png</file>
+    </qresource>
+    <qresource prefix="/Ressources/Clonium/GridShap">
+        <file>Ressources/Clonium/GridShap/BigRect.txt</file>
+        <file>Ressources/Clonium/GridShap/MediumRect.txt</file>
+        <file>Ressources/Clonium/GridShap/SmallRect.txt</file>
+    </qresource>
+    <qresource prefix="/Ressources/Clonium/Save"/>
 </RCC>
