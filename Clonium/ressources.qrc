@@ -25,5 +25,7 @@
 <file>./grey_3.png</file>
 <file>./grey_4.png</file>
 
+<file>./save.png</file>
+
 </qresource>
 </RCC>

@@ -19,7 +19,8 @@ public:
 
 signals:
 
-public slots:
+private slots:
+    void importGame();
 
 private:
     QLabel *m_lblClonium;

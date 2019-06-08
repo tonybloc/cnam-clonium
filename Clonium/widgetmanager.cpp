@@ -92,3 +92,9 @@ void WidgetManager::goToCloniumRules(){
     cloRules->show();
 }
 
+void WidgetManager:: goToGridSaved(){
+    this->WidgetActif=cloGrid;
+    cloMenu->hide();
+    cloGrid->show();
+}
+
