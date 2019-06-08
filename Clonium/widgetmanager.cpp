@@ -81,6 +81,10 @@ void WidgetManager::goToIndividual(){
 }
 
 void WidgetManager:: goToGrid(){
+    unsigned int nbHumans = cloParams->returnNbHumanPlayers();
+    unsigned int nbAI = cloParams->returnNbAIPlayers();
+
+    cloGrid = new GUI_Grid(this, nbHumans, nbAI);
     this->WidgetActif=cloGrid;
     cloIndi->hide();
     cloGrid->show();
