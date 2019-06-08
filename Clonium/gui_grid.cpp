@@ -1,9 +1,15 @@
 #include "gui_grid.h"
-
 #include <QMessageBox>
+
+using namespace  std;
 
 const int NB_ROWS = 10;
 const int NB_COLUMNS = 10;
+
+const string RED = ":/images/red_";
+const string BLUE = ":/images/blue_";
+const string GREY = ":/images/grey_";
+const string GREEN = ":/images/green_";
 
 GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
 {
@@ -19,15 +25,6 @@ GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
     for (uint i = 0; i < NB_ROWS; i++) {
         for (uint j = 0; j < NB_COLUMNS; j++) {
             btn = new QPushButton;
-
-            if (nbHumans+nbAI == 1){
-                if (i == 1 && j == 1){
-                    createFirstButton(i,j);
-                }
-                else{
-                    createGridButtons(i,j);
-                }
-            }
 
             if (nbHumans+nbAI == 2){
                 if (i == 1 && j == 1){
@@ -76,11 +73,11 @@ GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
         }
     }
 
-//    btnSave = new QPushButton;
-//    btnSave->setIcon(QIcon(":/images/save.png"));
-//    btnSave->setFixedSize(QSize(35,35));
-//    btnSave->setIconSize(QSize(35,35));
-//    m_layout->addWidget(btnSave,NB_ROWS,1);
+    btnSave = new QPushButton;
+    btnSave->setIcon(QIcon(":/images/save.png"));
+    btnSave->setFixedSize(QSize(35,35));
+    btnSave->setIconSize(QSize(35,35));
+    m_layout->addWidget(btnSave,NB_ROWS,1);
 
 }
 
@@ -94,18 +91,11 @@ void GUI_Grid::onClickButtonGrid(){
     pix = pix.transformed(m);
     btnSender->setIcon(ButtonIcon);
     btnSender->setIconSize(QSize(30,30));
-    // btnSender->setIconSize(pix.rect().size());
-    //btnSender->setIcon(QIcon(":/images/green_1.png"));
-
-
-    //btnSender->setIcon(QIcon(":/images/green_2.png"));
-
-
 }
 
 void GUI_Grid::createFirstButton(uint i, uint j){
     btnPlayer = new QPushButton;
-    btnPlayer->setIcon(QIcon(":/images/green_3.png"));
+    btnPlayer->setIcon(QIcon(chooseColor(1, 3)));
     btnPlayer->setStyleSheet("border:0px; border-radius:5px; background-color:purple;");
     btnPlayer->setFixedSize(QSize(this->size().width()/NB_COLUMNS-5,this->size().width()/NB_COLUMNS-5));
     btnPlayer->setIconSize(QSize(this->size().width()/NB_COLUMNS-7,this->size().width()/NB_COLUMNS-7));
@@ -133,3 +123,26 @@ void GUI_Grid::createGridButtons(uint i, uint j){
     m_layout->setAlignment(Qt::AlignHCenter);
 }
 
+QString GUI_Grid::chooseColor(uint id, uint niveau){
+    string chemin;
+
+    switch ( id ) {
+    case 0:
+      chemin = RED+to_string(niveau)+".png";
+      break;
+    case 1:
+      chemin = BLUE+to_string(niveau)+".png";
+      break;
+    case 2:
+      chemin = GREY+to_string(niveau)+".png";
+      break;
+    case 3:
+      chemin = GREEN+to_string(niveau)+".png";
+      break;
+    default:
+      chemin = GREEN+to_string(niveau)+".png";
+      break;
+    }
+
+    return QString::fromStdString(chemin);
+}

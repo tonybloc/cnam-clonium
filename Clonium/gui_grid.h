@@ -6,6 +6,8 @@
 #include <QGridLayout>
 #include <QPushButton>
 
+using namespace std;
+
 class GUI_Grid : public QWidget
 {
        Q_OBJECT
@@ -17,6 +19,7 @@ private slots:
     void onClickButtonGrid();
     void createFirstButton(uint i, uint j);
     void createGridButtons(uint i, uint j);
+    QString chooseColor(uint id, uint niveau);
 
 private:
 
