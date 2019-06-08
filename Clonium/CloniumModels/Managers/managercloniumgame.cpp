@@ -101,7 +101,7 @@ void ManagerCloniumGame::InitializeCloniumGameFromSave(std::string filePath)
 }
 bool ManagerCloniumGame::SaveCloniumGame(std::string filePath)
 {
-
+    return false;
 }
 ManagerCloniumGrid& ManagerCloniumGame::GetManagerCloniumGrid() const
 {
@@ -113,29 +113,6 @@ ManagerCloniumPlayer& ManagerCloniumGame::GetManagerCloniumPlayer() const
 }
 
 
-std::vector<CellContainer*>* ManagerCloniumGame::GetCellContainerWithPawnWithoutOwner()
-{
-    CloniumGrid* grid = dynamic_cast<CloniumGrid*>(this->m_Game->GetGrid());
-
-    std::vector<CellContainer*>* result = new std::vector<CellContainer*>();
-
-    std::vector<std::vector<CellContainer*>*>::iterator RowIterator;
-    std::vector<CellContainer*>::iterator ColumnIterator;
-    for(RowIterator = grid->GetCellsContainers()->begin(); RowIterator != grid->GetCellsContainers()->end(); RowIterator++)
-    {
-        for(ColumnIterator = (*RowIterator)->begin(); ColumnIterator != (*RowIterator)->end(); ColumnIterator++)
-        {
-            if(const CloniumPawn* pawn = dynamic_cast<CloniumPawn*>((*ColumnIterator)->GetPawn()))
-            {
-                if((pawn->GetLevel() != 0) && (pawn->GetOwner() == nullptr))
-                {
-                    result->push_back((*ColumnIterator));
-                }
-            }
-        }
-    }
-    return result;
-}
 
 ManagerCloniumGame& ManagerCloniumGame::Instance()
 {
@@ -144,16 +121,6 @@ ManagerCloniumGame& ManagerCloniumGame::Instance()
 
 // -- Predicates -- //
 
-bool ManagerCloniumGame::Predicate_FindCellContainersLinkedToPawnWithoutOwner(CellContainer& container)
-{
-    if(const CloniumPawn* pawn = dynamic_cast<CloniumPawn*>(container.GetPawn()))
-    {
-        if((pawn->GetLevel() != 0) && (pawn->GetOwner() == nullptr))
-            return true;
-    }
-    return false;
-
-}
 bool ManagerCloniumGame::Predicate_PlayerIsHuman(Player* p)
 {
     if(dynamic_cast<CloniumPlayer*>(p))

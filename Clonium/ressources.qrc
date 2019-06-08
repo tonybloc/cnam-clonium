@@ -2,6 +2,7 @@
 <RCC>
     <qresource prefix="/Ressources">
         <file>Ressources/modern_background.jpg</file>
+        <file>Ressources/save.png</file>
     </qresource>
     <qresource prefix="/Ressources/Clonium"/>
     <qresource prefix="/Ressources/Clonium/Images">

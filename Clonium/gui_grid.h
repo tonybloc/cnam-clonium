@@ -24,6 +24,10 @@ private slots:
     void createGridButtons(uint i, uint j);
     QString chooseColor(uint id, uint niveau);
 
+    void Split();
+    void GetRowAndColumnFromQButtonName(QPushButton* button, uint* row, uint* column);
+
+
 private:
 
     //layout of the window

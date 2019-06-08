@@ -7,6 +7,9 @@
 #include <QFile>
 #include <QString>
 
+
+typedef struct { uint row; uint column; } CellContainerIndex;
+
 class CloniumGrid : public SquareGrid
 {
 public:
@@ -18,7 +21,8 @@ public:
     void ShowGrid();
 
     bool LoadGridFromFile(std::string filepath);
-    std::vector<CellContainer*>* GetAdjacent(const CellContainer* container);
+    std::vector<CellContainerIndex*>* GetAdjacent(const CellContainer* container);
+    std::vector<CellContainerIndex*>* GetCellContainerWithPawnWithoutOwner();
 
 
 

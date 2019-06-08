@@ -51,7 +51,8 @@ GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
                 btn->setIconSize(QSize(33,33));
 
                 btn->setObjectName(QString("btn%1%2").arg(i).arg(j));
-                connect(btn, SIGNAL(clicked()), this, SLOT(test()));
+                connect(btn, SIGNAL(clicked()), this, SLOT(onClickButtonGrid()));
+                connect(btn, SIGNAL(clicked()), this, SLOT(Split()));
 
                 //add button
                 m_layout->addWidget(btn,static_cast<int>(i),j);
@@ -68,7 +69,7 @@ GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
     }
 
     btnSave = new QPushButton;
-    btnSave->setIcon(QIcon(":/images/save.png"));
+    btnSave->setIcon(QIcon(":/Ressources/Ressources/save.png"));
     btnSave->setFixedSize(QSize(35,35));
     btnSave->setIconSize(QSize(35,35));
     m_layout->addWidget(btnSave,NB_ROWS,1);
@@ -78,7 +79,7 @@ GUI_Grid::GUI_Grid(QWidget *parent, unsigned int nbHumans, unsigned int nbAI)
 void GUI_Grid::onClickButtonGrid(){
     QPushButton* btnSender = qobject_cast<QPushButton*>(sender());
 
-    QPixmap pix(":/images/green_1.png");
+    QPixmap pix(":/Ressources/Clonium/Images/Ressources/Clonium/Images/green_1.png");
     QIcon ButtonIcon(pix);
     QMatrix m;
     m.rotate(10);
@@ -125,16 +126,16 @@ QString GUI_Grid::chooseColor(uint id, uint niveau){
     string chemin;
 
     switch ( id ) {
-    case 0:
+    case 1:
       chemin = RED+to_string(niveau)+".png";
       break;
-    case 1:
+    case 2:
       chemin = BLUE+to_string(niveau)+".png";
       break;
-    case 2:
+    case 3:
       chemin = GREY+to_string(niveau)+".png";
       break;
-    case 3:
+    case 4:
       chemin = GREEN+to_string(niveau)+".png";
       break;
     default:
@@ -143,4 +144,31 @@ QString GUI_Grid::chooseColor(uint id, uint niveau){
     }
 
     return QString::fromStdString(chemin);
+}
+
+void GUI_Grid::Split()
+{
+    QPushButton* btnSender = qobject_cast<QPushButton*>(sender());
+
+    btnSender->objectName();
+    uint* row = new uint();
+    uint* column = new uint();
+
+    GetRowAndColumnFromQButtonName(btnSender, row, column);
+    ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
+    std::vector<CellContainerIndex*>* indexs = CloniumGame.GetGrid()->GetAdjacent(CloniumGame.GetGrid()->GetElementAt(*row,*column));
+    for(CellContainerIndex* index : *indexs)
+    {
+        QPushButton* button = this->findChild<QPushButton*>(QString("btn%1%2").arg(index->row).arg(index->column));
+        button->setStyleSheet("border:0px; border-radius:5px; background-color:blue;");
+    }
+}
+
+
+void GUI_Grid::GetRowAndColumnFromQButtonName(QPushButton* button, uint* row, uint* column)
+{
+    QString name = button->objectName();
+    *column = static_cast<uint>(name.mid(name.length()-1,1).toInt());
+    *row = static_cast<uint>(name.mid(name.length()-2,1).toInt());
+
 }

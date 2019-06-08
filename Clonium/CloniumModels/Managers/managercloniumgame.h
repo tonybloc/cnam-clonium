@@ -12,8 +12,6 @@
 #define NUMBER_MAX_PLAYERS 4
 #define NUMBER_MIN_PLAYERS 2
 
-typedef struct { uint row; uint column; } CellContainerIndex;
-
 class ManagerCloniumGame
 {
 public:
@@ -43,9 +41,6 @@ public:
 
     // Initialize Game by save file
     void InitializeCloniumGameFromSave(std::string filePath);
-
-    std::vector<CellContainer*>* GetCellContainerWithPawnWithoutOwner();
-
     // Save current Game
     bool SaveCloniumGame(std::string filePath);
 
