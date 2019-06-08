@@ -25,21 +25,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-    abstractcloniumplayer.cpp \
+    CloniumModels/Managers/managercloniumgame.cpp \
+    CloniumModels/Managers/managercloniumgrid.cpp \
+    CloniumModels/Managers/managercloniumplayer.cpp \
+    CloniumModels/cloniumpawn.cpp \
+    CloniumModels/cloniumplayerabstract.cpp \
+    CloniumModels/cloniumgame.cpp \
+    CloniumModels/cloniumgrid.cpp \
+    CloniumModels/cloniumia.cpp \
+    CloniumModels/cloniumplayer.cpp \
+    CloniumModels/cloniumteam.cpp \
+    managergames.cpp \
     cellcontainer.cpp \
-    cellcontainervalue.cpp \
-    cloniumgame.cpp \
-    cloniumgrid.cpp \
-    cloniumia.cpp \
-    cloniumplayer.cpp \
-    cloniumteam.cpp \
+    cloniummenu.cpp \
     game.cpp \
     grid.cpp \
     gui_grid.cpp \
     gui_individual.cpp \
     gui_team.cpp \
         main.cpp \
-    cloniummenu.cpp \
     mainmenu.cpp \
     cloniumparameters.cpp \
     about.cpp \
@@ -48,19 +52,22 @@ SOURCES += \
     squaregrid.cpp \
     team.cpp \
     widgetmanager.cpp \
-    abstractcloniumpawn.cpp \
     cloniumrules.cpp
 
 HEADERS += \
-    abstractcloniumplayer.h \
+    CloniumModels/Managers/managercloniumgame.h \
+    CloniumModels/Managers/managercloniumgrid.h \
+    CloniumModels/Managers/managercloniumplayer.h \
+    CloniumModels/cloniumpawn.h \
+    CloniumModels/cloniumplayerabstract.h \
+    CloniumModels/cloniumgame.h \
+    CloniumModels/cloniumgrid.h \
+    CloniumModels/cloniumia.h \
+    CloniumModels/cloniumplayer.h \
+    CloniumModels/cloniumteam.h \
+    managergames.h \
     cellcontainer.h \
-    cellcontainervalue.h \
-    cloniumgame.h \
-    cloniumgrid.h \
-    cloniumia.h \
     cloniummenu.h \
-    cloniumplayer.h \
-    cloniumteam.h \
     game.h \
     grid.h \
     gui_grid.h \
@@ -74,7 +81,6 @@ HEADERS += \
     squaregrid.h \
     team.h \
     widgetmanager.h \
-    abstractcloniumpawn.h \
     cloniumrules.h
 
 
