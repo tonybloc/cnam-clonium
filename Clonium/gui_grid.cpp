@@ -13,7 +13,6 @@ GUI_Grid::GUI_Grid(QWidget *parent)
     ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
 
     setFixedSize(500, 700);
-    setStyleSheet("background-color: blue;");
 
     this->setParent(parent);
     m_layout = new QGridLayout();
@@ -30,14 +29,13 @@ GUI_Grid::GUI_Grid(QWidget *parent)
                 {
                     btn->setStyleSheet("border:0px; border-radius:5px; background-color:white;");
 
-
                     if(CloniumPawn* pawn = dynamic_cast<CloniumPawn*>(container->GetPawn()))
                     {
                         UpdateImageSource(btn);
                         if((pawn->GetOwner() == nullptr))
                         {
                             btn->setStyleSheet("border:0px; border-radius:5px; background-color:green;");
-
+                            btn->setEnabled(true);
                         }
                     }
                 }
@@ -45,17 +43,18 @@ GUI_Grid::GUI_Grid(QWidget *parent)
                 {
                     btn->setStyleSheet("border:0px; border-radius:5px; background-color:#fefefe;");
                 }
-                btn->setFixedSize(QSize(35,35));
-                btn->setIconSize(QSize(33,33));
+
+                int pawn_width = this->size().width()/CloniumGame.GetGrid()->GetNumberOfRows()-4;
+                int icon_with = this->size().width()/CloniumGame.GetGrid()->GetNumberOfRows()-2;
+
+                btn->setFixedSize(QSize(pawn_width,pawn_width));
+                btn->setIconSize(QSize(icon_with,icon_with));
 
                 btn->setObjectName(QString("btn%1%2").arg(i).arg(j));
                 connect(btn, SIGNAL(clicked()), this, SLOT(onClickButtonGrid()));
 
                 //add button
                 m_layout->addWidget(btn,static_cast<int>(i),j);
-                // set stretch
-                m_layout->setRowStretch(static_cast<int>(i)+2,2);
-                m_layout->setColumnStretch(static_cast<int>(j)+2,2);
                 // space betwwen lines and columns
                 m_layout->setVerticalSpacing(1);
                 m_layout->setHorizontalSpacing(1);
@@ -71,6 +70,7 @@ GUI_Grid::GUI_Grid(QWidget *parent)
     btnSave->setFixedSize(QSize(35,35));
     btnSave->setIconSize(QSize(35,35));
     m_layout->addWidget(btnSave,13,1);
+    m_layout->setAlignment(Qt::AlignHCenter);
 
 }
 
@@ -126,8 +126,8 @@ QString GUI_Grid::chooseColor(uint id, uint niveau){
       chemin = BLUE+to_string(niveau)+".png";
       break;
     case 1:
-      chemin = RED+to_string(niveau)+".png";
-      break;
+        chemin = RED+to_string(niveau)+".png";
+        break;
     case 2:
       chemin = GREY+to_string(niveau)+".png";
       break;
@@ -137,6 +137,7 @@ QString GUI_Grid::chooseColor(uint id, uint niveau){
     default:
       chemin = "";
       break;
+
     }
 
     return QString::fromStdString(chemin);

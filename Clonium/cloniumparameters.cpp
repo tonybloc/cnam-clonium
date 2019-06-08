@@ -20,7 +20,7 @@ CloniumParameters::CloniumParameters(QWidget *parent)
 
     // -- Selectors of Shapes -- //
 
-    m_lblGridShape = new QLabel("Forme de la grille :");
+    m_lblGridShape = new QLabel("Taille de la grille :");
     m_lblGridShape->setFont(QFont("Commic Sans MS", 12));
     m_lblGridShape->setWordWrap(true);
 
