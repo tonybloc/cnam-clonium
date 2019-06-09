@@ -16,18 +16,18 @@ class GUI_Grid : public QWidget
        Q_OBJECT
 
 public:
-    GUI_Grid(QWidget *parent = nullptr, unsigned int nbHumans=0, unsigned int nbAI=0);
+    GUI_Grid(QWidget *parent = nullptr);
 
 private slots:
     void onClickButtonGrid();
     void createFirstButton(uint i, uint j);
     void createGridButtons(uint i, uint j);
     QString chooseColor(uint id, uint niveau);
-    void UpdateImageSource(QPushButton* button);
 
-    void Split(const QPushButton* button);
+    void Split(std::vector<QPushButton*> containers);
     void GetRowAndColumnFromQButtonName(const QPushButton* button, uint* row, uint* column);
-    void onClickButton();
+
+    void UpdateImageSource(QPushButton* button);
     CloniumPawn* GetPawnLinkedToQPushButton(const QPushButton* button);
     CellContainer* GetCellContainerLinkedToQPushButton(const QPushButton* button);
 

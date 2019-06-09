@@ -3,7 +3,6 @@
 SquareGrid::SquareGrid(uint numberOfRow, uint numberOfColumn) :
     m_rows(numberOfRow), m_columns(numberOfColumn)
 {    
-    std::cout << "SQUARE_GRID : initialize Grille" << std::endl;
     InitializeCellContainers(numberOfRow, numberOfColumn);
 }
 

@@ -10,6 +10,7 @@ class Pawn
 {
 public:
     Pawn();
+    Pawn(Player* player);
     virtual ~Pawn() = 0;
 
     inline void SetOwner(Player* const player) {m_owner = player;}

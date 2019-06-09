@@ -18,9 +18,6 @@ public:
     static ManagerCloniumGame& Instance();
     ~ManagerCloniumGame();
 
-
-
-
     // Make sure that game was correctly designed
     bool GameIsReady();
 
@@ -36,6 +33,7 @@ public:
     uint GetMaximumOfPlayer() const;
     uint GetMinimumOfPlayer() const;
 
+    void IncreaseValueOfPawn();
     // Initialize Game
     void InitializeCloniumGame(AvailableCloniumGrid shap);
 
@@ -43,10 +41,6 @@ public:
     void InitializeCloniumGameFromSave(std::string filePath);
     // Save current Game
     bool SaveCloniumGame(std::string filePath);
-
-
-
-
 
 private:
     ManagerCloniumGame();

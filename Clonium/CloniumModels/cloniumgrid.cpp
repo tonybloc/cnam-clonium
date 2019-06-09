@@ -188,3 +188,13 @@ std::vector<CellContainerIndex*>* CloniumGrid::GetCellContainerWithPawnWithoutOw
     }
     return result;
 }
+
+void CloniumGrid::IncreaseValueOfPawn(const CellContainerIndex* index)
+{
+    /*
+    if(GetElementAt(index->row, index->column) != nullptr)
+    {
+        GetElementAt(index->row, index->column)->SetPawn(new)
+    }
+    */
+}
