@@ -23,11 +23,15 @@ public:
 
 private slots:
     void onClickButtonGrid();
+    void onClickSaveGrid();
     QString chooseColor(uint id, uint niveau);
 
     void Split(std::vector<QPushButton*> containers);
     void GetRowAndColumnFromQButtonName(const QPushButton* button, uint* row, uint* column);
 
+
+    void BehaviorCloniumPlayer(CloniumPlayer* player);
+    void BehaviorCloniumIA(CloniumIA* player);
 
     void UpdateImageSource(QPushButton* button);
     void UpdateImageSource(QString buttonName);
@@ -35,7 +39,11 @@ private slots:
     CloniumPawn* GetPawnLinkedToQPushButton(const QPushButton* button);
     CellContainer* GetCellContainerLinkedToQPushButton(const QPushButton* button);
 
+    bool IsEndGame();
+    void Comportement_IA(Player* player);
 private:
+
+
 
     //layout of the window
     QGridLayout *m_Gridlayout;

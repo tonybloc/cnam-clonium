@@ -100,12 +100,24 @@ Player* ManagerCloniumGame::GetCurrentPlayer() const {
 }
 
 Player* ManagerCloniumGame::GetNextPlayer() const{
-    index_Player=((index_Player+1)%GetNumberOfPlayer());
-    if(GetPlayers()->size() != 0)
-        return GetPlayers()->at(index_Player);
-    else
-        return nullptr;
 
+    if(GetPlayers()->size() != 0)
+    {
+        index_Player = ((index_Player+1) % GetNumberOfPlayer());
+
+        Player* player = GetPlayers()->at(index_Player);
+        std::cout << "Player Next :" << player->GetId() << std::endl;
+        return player;
+        /*
+        while ((GetPawnOwnedByPlayer(player)->size() == 0)) {
+            GetNextPlayer();
+        }*/
+        //return GetPlayers()->at(index_Player);
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 CloniumGrid* ManagerCloniumGame::GetGrid() const
@@ -161,7 +173,58 @@ void ManagerCloniumGame::InitializeCloniumGameFromSave(std::string filePath)
 }
 bool ManagerCloniumGame::SaveCloniumGame(std::string filePath)
 {
-    return false;
+
+    QFile file(QString::fromStdString(filePath));
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        std::cout << "Open file failed !" << std::endl;
+        return false;
+    }
+    QTextStream out(&file);
+
+    std::vector<Player*>* players = GetPlayers();
+    std::vector<std::vector<CellContainer*>*>* container = GetGrid()->GetCellsContainers();
+
+    std::vector<Player*>::iterator playerIterator;
+    std::vector<std::vector<CellContainer*>*>::iterator RowIterator;
+    std::vector<CellContainer*>::iterator ColumnIterator;
+
+    out << "#GAME";
+    out << QString::fromStdString(GetGame()->GetTitle()) << GetGame()->GetNumberOfPlayer() << GetGame()->GetMaximumOfPlayer() << GetGame()->GetMinumumOfPlayer();
+    out << "#PLAYER";
+    for(playerIterator = players->begin(); playerIterator != players->end(); playerIterator++)
+    {
+        out << (*playerIterator)->GetId() << " " << QString::fromStdString((*playerIterator)->GetName()) << endl;;
+    }
+    out << "#GRID";
+    for(RowIterator = container->begin(); RowIterator != container->end(); RowIterator++)
+    {
+        QString str = "";
+        for(ColumnIterator = (*RowIterator)->begin(); ColumnIterator != (*RowIterator)->end(); ColumnIterator++)
+        {
+            str.append((*ColumnIterator)->GetIsActive());
+
+            if((*ColumnIterator)->GetPawn() != nullptr)
+            {
+                if((*ColumnIterator)->GetPawn()->GetOwner() != nullptr)
+                {
+                    str.append((*ColumnIterator)->GetPawn()->GetOwner()->GetId());
+                }
+                else {
+                    str.append(".");
+                }
+                str.append(dynamic_cast<CloniumPawn*>((*ColumnIterator)->GetPawn())->GetLevel());
+            }
+            else {
+                str.append(".");
+            }
+
+            str.append(" ");
+        }
+        out << str << endl;
+    }
+
+    return true;
 }
 ManagerCloniumGrid& ManagerCloniumGame::GetManagerCloniumGrid() const
 {

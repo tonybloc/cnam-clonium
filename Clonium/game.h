@@ -20,24 +20,25 @@ public:
 
     /* -- Accessor -- */
 
-    inline uint GetMinumumOfPlayer(void) const {return this->m_MinimumOfPlayers;}
-    inline uint GetMaximumOfPlayer(void) const {return this->m_MaximumOfPlayers;}
-    inline uint GetNumberOfPlayer(void) const  {
-std::cout<<"Nb players"<<m_Players->size()<<std::endl;
-        return static_cast<uint>(m_Players->size());
-                                               }
-    inline std::string GetTitle(void) const {return this->m_Title;}
+    /**
+     * @brief GetMinumumOfPlayer : Get the minimum of player in game
+     * @return
+     */
+    inline uint GetMinumumOfPlayer(void) const {return this->m_MinimumOfPlayers;}    
+    inline uint GetMaximumOfPlayer(void) const {return this->m_MaximumOfPlayers;}    
+    inline uint GetNumberOfPlayer(void) const  {return static_cast<uint>(m_Players->size());}
+    inline std::string GetTitle(void) const {return this->m_Title;}    
     inline std::vector<Player*>* GetPlayers(void) const {return m_Players;}
 
     /* -- Virtual Method -- */
 
-    virtual void AddPlayer(Player* player);
+    virtual void AddPlayer(Player* player);    
     virtual void RemovePlayer(const Player* player);
 
 
     /* -- Pure Virtual Method -- */
 
-    virtual Grid* GetGrid(void) const;
+    virtual Grid* GetGrid(void) const;    
     virtual void SetGrid(Grid* const grid);
 
 protected:

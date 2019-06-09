@@ -22,7 +22,7 @@ public:
             return true;
         }
         return false;
-    };
+    }
 
     static uint const SplitLevel = 4;
 

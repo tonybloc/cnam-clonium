@@ -7,7 +7,7 @@
 #include "../cloniumplayerabstract.h"
 #include "../cloniumia.h"
 #include "../cloniumplayer.h"
-
+#include <QTextStream>
 
 #define NUMBER_MAX_PLAYERS 4
 #define NUMBER_MIN_PLAYERS 2
@@ -24,23 +24,42 @@ public:
 
     // Add Player to Clonium Game
     void AddCloniumPlayer(CloniumPlayerAbstract* player);
+    // Remove player in game
     void RemoveCloniumPlayer(CloniumPlayerAbstract* player);
 
+    // Get current player of game
     Player* GetCurrentPlayer() const;
+    // Get next player of game
     Player* GetNextPlayer() const;
+    // Get player
     std::vector<Player*>* GetPlayers() const;
+    // Get list of pawn that owned by player
     std::vector<CellContainerIndex*>* GetPawnOwnedByPlayer(const Player* player) const;
+    // Get current grid
     CloniumGrid* GetGrid() const;
+    // Get current game;
     CloniumGame* GetGame() const;
-    void SetGame(CloniumGame* game);
-    uint GetNumberOfHuman() const;
-    uint GetNumberOfIA() const ;
-    uint GetNumberOfPlayer() const;
-    uint GetMaximumOfPlayer() const;
-    uint GetMinimumOfPlayer() const;
-    void IncreaseValueOfPawn();
 
+    // Start game (not used)
+    void SetGame(CloniumGame* game);
+    // GetNumber of humain
+    uint GetNumberOfHuman() const;
+    // Get number of IA in game
+    uint GetNumberOfIA() const ;
+    // Get number of player in game
+    uint GetNumberOfPlayer() const;
+    // Get Maximum of player
+    uint GetMaximumOfPlayer() const;
+    // Get Minimum of player
+    uint GetMinimumOfPlayer() const;
+
+
+    //void IncreaseValueOfPawn();
+
+    // Incremente counter of turn
     void NextTurn();
+
+    // Get Number of turn
     uint GetNumberOfTurn() const;
 
     // Initialize Game
@@ -48,14 +67,20 @@ public:
 
     // Initialize Game by save file
     void InitializeCloniumGameFromSave(std::string filePath);
+
     // Save current Game
     bool SaveCloniumGame(std::string filePath);
+
+
+    const std::string savefilepath = ":/Ressources/Clonium/Save/Ressources/Clonium/Save/clonium_save.txt";
 
 private:
     static uint index_Player;
     static uint nb_Round;
 
     ManagerCloniumGame();
+
+    // Predicate
     static bool Predicate_FindCellContainersLinkedToPawnWithoutOwner(CellContainer& container);
     static bool Predicate_PlayerIsHuman(Player* p);
     static bool Predicate_PlayerIsIA(Player* p);
@@ -64,7 +89,6 @@ private:
     ManagerCloniumPlayer& GetManagerCloniumPlayer() const;
 
 
-    //static std::string CloniumGameSavePath = ":/grids/clonium/Saves/CloniumSave.txt";
     CloniumGame* m_Game;
     static ManagerCloniumGame m_instance;
 

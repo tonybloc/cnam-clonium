@@ -1,4 +1,3 @@
-<!DOCTYPE RCC>
 <RCC>
     <qresource prefix="/Ressources">
         <file>Ressources/modern_background.jpg</file>
@@ -34,5 +33,7 @@
         <file>Ressources/Clonium/GridShap/MediumRect.txt</file>
         <file>Ressources/Clonium/GridShap/SmallRect.txt</file>
     </qresource>
-    <qresource prefix="/Ressources/Clonium/Save"/>
+    <qresource prefix="/Ressources/Clonium/Save">
+        <file>Ressources/Clonium/Save/clonium_save.txt</file>
+    </qresource>
 </RCC>
