@@ -29,21 +29,21 @@ GUI_Grid::GUI_Grid(QWidget *parent)
             {
                 if(container->GetIsActive())
                 {
-                    btn->setStyleSheet("border:0px; border-radius:5px; background-color:white;");
+                    btn->setStyleSheet("border:0px; border-radius:5px; background-color:#AFEEEE;");
 
                     if(CloniumPawn* pawn = dynamic_cast<CloniumPawn*>(container->GetPawn()))
                     {
                         UpdateImageSource(btn);
                         if((pawn->GetOwner() == nullptr))
                         {
-                            btn->setStyleSheet("border:0px; border-radius:5px; background-color:green;");
-                            btn->setEnabled(true);
+                            btn->setStyleSheet("border:0px; border-radius:5px; background-color: #4169E1 ;");
                         }
                     }
                 }
                 else
                 {
-                    btn->setStyleSheet("border:0px; border-radius:5px; background-color:#fefefe;");
+                    btn->setStyleSheet("border:0px; border-radius:5px; background-color:#483D8B;");
+                    btn->setEnabled(false);
                 }
 
                 int pawn_width = this->size().width()/CloniumGame.GetGrid()->GetNumberOfRows()-4;
@@ -79,24 +79,76 @@ GUI_Grid::GUI_Grid(QWidget *parent)
 void GUI_Grid::onClickButtonGrid()
 {
     QPushButton* btnSender = qobject_cast<QPushButton*>(sender());
+
     std::cout << "Niveau Pion Cliquee" << GetPawnLinkedToQPushButton(btnSender)->GetLevel() << std::endl;
     std::vector<QPushButton*> listOfButton;
     listOfButton.push_back(btnSender);
 
-    QGraphicsOpacityEffect *eff  = new QGraphicsOpacityEffect(this);
-    btnSender->setGraphicsEffect(eff);
+    Player *p = CloniumGame.GetCurrentPlayer();
+    uint* ligne = new uint();
+    uint* colonne = new uint();
+    GetRowAndColumnFromQButtonName(btnSender, ligne, colonne);
 
-    m_animator = new QPropertyAnimation(eff, "opacity");
-    m_animator->setDuration(500);
-    m_animator->setStartValue(1);
-    m_animator->setEndValue(1);
-    m_animator->setEasingCurve(QEasingCurve::InBack);
-    m_animator->start(QPropertyAnimation::DeleteWhenStopped);
+    if((CloniumGame.GetNumberOfTurn() == 0)){
+
+        std::vector<CellContainerIndex*> * list = CloniumGame.GetGrid()->GetCellContainerWithPawnWithoutOwner();
+
+        for (CellContainerIndex* c : *list) {
+            if( c->row == *ligne && c->column == *colonne){
+                GetPawnLinkedToQPushButton(btnSender)->SetOwner(p);
+                GetPawnLinkedToQPushButton(btnSender)->SetLevel(3);
+            }
+        }
+
+        UpdateImageSource(btnSender);
+        int res = CloniumGame.GetNumberOfPlayer();
+
+        if((CloniumGame.GetCurrentPlayer()->GetId() == CloniumGame.GetNumberOfPlayer()-1) ){
+            CloniumGame.NextTurn();
+        }
+        CloniumGame.GetNextPlayer();
 
 
-    QPixmap pix(":/Ressources/Clonium/Images/Ressources/Clonium/Images/green_1.png");
-    QIcon ButtonIcon(pix);
-    btnSender->setIcon(ButtonIcon);
+    }
+   else  {
+
+        if (GetPawnLinkedToQPushButton(btnSender) == nullptr){
+            QMessageBox::information(this, "Information", "Vous ne pouvez cliquer ici ! ");
+        }
+        else if(GetPawnLinkedToQPushButton(btnSender)->GetOwner()->GetId() != p->GetId()){
+            QMessageBox::information(this, "Information", "Vous ne pouvez cliquer ici ! ");
+        }
+        else{
+
+           UpdateImageSource(btnSender);
+
+            if((CloniumGame.GetCurrentPlayer()->GetId() == CloniumGame.GetNumberOfPlayer())-1 ){
+                CloniumGame.NextTurn();
+            }
+            CloniumGame.GetNextPlayer();
+
+        }
+    }
+
+        /*
+        if (GetPawnLinkedToQPushButton(btnSender)->GetOwner() == nullptr){
+            QMessageBox::information(this, "Information", "Vous ne pouvez cliquer ici ! ");
+        }
+        else if(GetPawnLinkedToQPushButton(btnSender)->GetOwner()->GetId() != p->GetId()){
+            QMessageBox::information(this, "Information", "Vous ne pouvez cliquer ici ! ");
+        }
+        else{
+
+           UpdateImageSource(btnSender);
+
+            if((CloniumGame.GetCurrentPlayer()->GetId() == CloniumGame.GetNumberOfPlayer())-1 ){
+                CloniumGame.NextTurn();
+            }
+            CloniumGame.GetNextPlayer();
+
+        }
+
+    }*/
 
     int icon_with = this->size().width()/CloniumGame.GetGrid()->GetNumberOfRows()-2;
     btnSender->setIconSize(QSize(icon_with,icon_with));
@@ -242,4 +294,28 @@ CellContainer* GUI_Grid::GetCellContainerLinkedToQPushButton(const QPushButton* 
     GetRowAndColumnFromQButtonName(button, row, column);
 
     return CloniumGame.GetGrid()->GetElementAt(*row, *column);
+}
+
+void GUI_Grid::UpdateImageSource(QPushButton* button)
+{
+    CloniumPawn* pawn = GetPawnLinkedToQPushButton(button);
+    if(pawn != nullptr)
+    {
+        button->setIcon(QIcon(chooseColor(CloniumGame.GetCurrentPlayer()->GetId(), pawn->GetLevel())));
+        button->setToolTip(QString::fromStdString(CloniumGame.GetCurrentPlayer()->GetName()));
+
+        QGraphicsOpacityEffect *eff  = new QGraphicsOpacityEffect(this);
+        button->setGraphicsEffect(eff);
+
+        m_animator = new QPropertyAnimation(eff, "opacity");
+        m_animator->setDuration(500);
+        m_animator->setStartValue(1);
+        m_animator->setEndValue(1);
+        m_animator->setEasingCurve(QEasingCurve::InBack);
+        m_animator->start(QPropertyAnimation::DeleteWhenStopped);
+
+        int icon_with = this->size().width()/CloniumGame.GetGrid()->GetNumberOfRows()-2;
+        button->setIconSize(QSize(icon_with,icon_with));
+
+    }
 }

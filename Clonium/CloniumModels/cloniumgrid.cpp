@@ -90,7 +90,7 @@ bool CloniumGrid::LoadGridFromFile(std::string filePath)
         m_CellContainers->push_back(containers);
     }
 
-    ShowGrid();
+    //ShowGrid();
     return true;
 }
 std::vector<CellContainerIndex*>* CloniumGrid::GetAdjacent(const CellContainer* container)
