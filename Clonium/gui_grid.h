@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QPropertyAnimation>
 #include <QLabel>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 using namespace std;
 
 #include "managergames.h"
@@ -36,7 +38,13 @@ private slots:
 private:
 
     //layout of the window
-    QGridLayout *m_layout;
+    QGridLayout *m_Gridlayout;
+    QVBoxLayout* m_MainLayout;
+    QHBoxLayout* m_BotLayout;
+    QHBoxLayout* m_TopLayout;
+    QLabel* m_labelInformation;
+    QPushButton* m_btnPlayerIcon;
+    QLabel* m_labelPlayerName;
 
     // grid button
     QPushButton *btn;
@@ -46,8 +54,6 @@ private:
 
     // save button
     QPushButton *btnSave;
-
-    //CloniumPawn* pawn;
 
     // animation
     QPropertyAnimation *m_animator;

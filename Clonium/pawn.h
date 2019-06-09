@@ -13,7 +13,7 @@ public:
     Pawn(Player* player);
     virtual ~Pawn() = 0;
 
-    inline void SetOwner(Player* const player) {m_owner = player;}
+    inline void SetOwner(Player* player) {m_owner = player;}
     inline Player* GetOwner(void) const {return m_owner;}
 private:
     Player* m_owner;

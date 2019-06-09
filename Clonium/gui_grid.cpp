@@ -17,9 +17,36 @@ GUI_Grid::GUI_Grid(QWidget *parent)
     setFixedSize(500, 700);
 
     this->setParent(parent);
-    m_layout = new QGridLayout();
+    m_Gridlayout = new QGridLayout();
+    m_MainLayout = new QVBoxLayout();
+    m_BotLayout = new QHBoxLayout();
+    m_TopLayout = new QHBoxLayout();
 
-    this->setLayout(m_layout);
+
+    btnSave = new QPushButton();
+    btnSave->setIcon(QIcon(":/Ressources/Ressources/save.png"));
+    btnSave->setFixedSize(QSize(35,35));
+    btnSave->setIconSize(QSize(35,35));
+
+    m_labelInformation = new QLabel("Choix des couleurs", this);
+    m_labelInformation->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+    m_labelInformation->setFrameShadow(QFrame::Raised);
+    m_labelInformation->setMargin(10);
+    m_labelInformation->setFont(QFont("Commic Sans MS", 16));
+    m_labelInformation->setStyleSheet("font-weight:bold; color:black");
+
+
+    m_btnPlayerIcon = new QPushButton();
+    m_btnPlayerIcon->setVisible(false);
+    m_labelPlayerName = new QLabel("",this);
+    m_labelPlayerName->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+    m_labelPlayerName->setFrameShadow(QFrame::Raised);
+    m_labelPlayerName->setMargin(10);
+    m_labelPlayerName->setFont(QFont("Commic Sans MS", 12));
+    m_labelPlayerName->setStyleSheet("font-weight:bold; color:White");
+
+    if(CloniumGame.GetCurrentPlayer() != nullptr)
+        m_labelPlayerName->setText(QString::fromStdString(CloniumGame.GetCurrentPlayer()->GetName()));
 
     for (uint i = 0; i < CloniumGame.GetGrid()->GetNumberOfRows(); i++) {
         for (uint j = 0; j < CloniumGame.GetGrid()->GetNumberOfColumns(); j++) {
@@ -56,22 +83,30 @@ GUI_Grid::GUI_Grid(QWidget *parent)
                 connect(btn, SIGNAL(clicked()), this, SLOT(onClickButtonGrid()));
 
                 //add button
-                m_layout->addWidget(btn,static_cast<int>(i),j);
+                m_Gridlayout->addWidget(btn,static_cast<int>(i),j);
                 // space betwwen lines and columns
-                m_layout->setVerticalSpacing(1);
-                m_layout->setHorizontalSpacing(1);
-                m_layout->setAlignment(Qt::AlignHCenter);
+                m_Gridlayout->setVerticalSpacing(1);
+                m_Gridlayout->setHorizontalSpacing(1);
+                m_Gridlayout->setAlignment(Qt::AlignHCenter);
 
             }
             UpdateImageSource(btn);
         }
     }
 
-    btnSave = new QPushButton();
-    btnSave->setIcon(QIcon(":/Ressources/Ressources/save.png"));
-    btnSave->setFixedSize(QSize(35,35));
-    btnSave->setIconSize(QSize(35,35));
-    m_layout->addWidget(btnSave,13,1);
+
+    m_TopLayout->addWidget(btnSave);
+    m_TopLayout->addWidget(m_labelInformation);
+
+
+    m_BotLayout->addWidget(m_btnPlayerIcon);
+    m_BotLayout->addWidget(m_labelPlayerName);
+
+    m_MainLayout->addLayout(m_TopLayout);
+    m_MainLayout->addLayout(m_Gridlayout);
+    m_MainLayout->addLayout(m_BotLayout);
+
+    this->setLayout(m_MainLayout);
 
 }
 
@@ -126,7 +161,7 @@ void GUI_Grid::onClickButtonGrid()
         }
 
     }
-   else  {
+    else{
 
         if (pawn == nullptr){
             std::cout << "PAWN : NULLPTR" << std::endl;
@@ -156,7 +191,9 @@ void GUI_Grid::onClickButtonGrid()
             CloniumGame.GetNextPlayer();
 
         }
-    }        
+    }
+
+    m_labelPlayerName->setText(QString::fromStdString(CloniumGame.GetCurrentPlayer()->GetName()));
 
 }
 
@@ -192,6 +229,7 @@ void GUI_Grid::Split(std::vector<QPushButton*> buttons)
     std::vector<QPushButton*>::iterator it = buttons.begin();
     std::vector<QPushButton*> nextButtons;
 
+    Player* currentPlayer = CloniumGame.GetCurrentPlayer();
     if( it == buttons.end())
     {
         return;
@@ -204,7 +242,7 @@ void GUI_Grid::Split(std::vector<QPushButton*> buttons)
             {
                 if(dynamic_cast<CloniumPawn*>(container->GetPawn())->IncreaseLevel())
                 {
-                    //std::cout << "LEVEL ++ = " << dynamic_cast<CloniumPawn*>(container->GetPawn())->GetLevel() << std::endl;
+                    container->SetPawn(nullptr);
 
                     std::vector<CellContainerIndex*>* indexs = CloniumGame.GetGrid()->GetAdjacent(GetCellContainerLinkedToQPushButton(*it));
                     for(CellContainerIndex* index : *indexs)
@@ -214,6 +252,13 @@ void GUI_Grid::Split(std::vector<QPushButton*> buttons)
 
                         if(!containerAdjacent->GetIsActive())
                             continue;
+
+                        if(containerAdjacent->GetPawn() != nullptr)
+                        {
+                            containerAdjacent->GetPawn()->SetOwner(currentPlayer);
+                        }
+
+
 
                         QPushButton* buttonTemp = this->findChild<QPushButton*>(QString("btn%1%2").arg(index->row).arg(index->column));
                         nextButtons.push_back(buttonTemp);
@@ -226,7 +271,7 @@ void GUI_Grid::Split(std::vector<QPushButton*> buttons)
             else
             {
                 CloniumPawn* pawn = new CloniumPawn();
-                pawn->SetOwner(CloniumGame.GetCurrentPlayer());
+                pawn->SetOwner(currentPlayer);
                 pawn->SetLevel(1);
                 container->SetPawn(pawn);
                 //std::cout << "NEW LEVEL = " << dynamic_cast<CloniumPawn*>(container->GetPawn())->GetLevel() << std::endl;
@@ -253,7 +298,7 @@ void GUI_Grid::UpdateImageSource(QPushButton* button)
         button->setGraphicsEffect(eff);
 
         m_animator = new QPropertyAnimation(eff, "opacity");
-        m_animator->setDuration(500);
+        m_animator->setDuration(1);
         m_animator->setStartValue(1);
         m_animator->setEndValue(1);
         m_animator->setEasingCurve(QEasingCurve::InBack);
@@ -264,8 +309,8 @@ void GUI_Grid::UpdateImageSource(QPushButton* button)
     }
     else
     {
-        std::cout << "UPDATE : NULL PTR -OR- NO OWNER" << std::endl;
-
+        button->setIcon(QIcon(""));
+        button->setToolTip("");
     }
 }
 
@@ -295,7 +340,8 @@ void GUI_Grid::UpdateImageSource(QString buttonName)
     }
     else
     {
-        std::cout << "UPDATE : NULL PTR -OR- NO OWNER" << std::endl;
+        btn->setIcon(QIcon(""));
+        btn->setToolTip("");
 
     }
 }

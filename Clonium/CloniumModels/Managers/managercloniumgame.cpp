@@ -57,13 +57,15 @@ std::vector<Player*>* ManagerCloniumGame::GetPlayers() const
 }
 
 
-std::vector<CellContainer*>* ManagerCloniumGame::GetPawnOwnedByPlayer(const Player* player)
+std::vector<CellContainerIndex*>* ManagerCloniumGame::GetPawnOwnedByPlayer(const Player* player) const
 {
-    std::vector<CellContainer*>* result = new std::vector<CellContainer*>();
+    std::vector<CellContainerIndex*>* result = new std::vector<CellContainerIndex*>();
     std::vector<std::vector<CellContainer*>*>* CellsContainers = this->GetGrid()->GetCellsContainers();
     std::vector<std::vector<CellContainer*>*>::iterator RowIterator;
     std::vector<CellContainer*>::iterator ColumnIterator;
 
+    uint rows = 0;
+    uint column = 0;
     for(RowIterator = CellsContainers->begin(); RowIterator != CellsContainers->end(); RowIterator++ )
     {
         for(ColumnIterator = (*RowIterator)->begin(); ColumnIterator != (*RowIterator)->end(); ColumnIterator++)
@@ -74,23 +76,35 @@ std::vector<CellContainer*>* ManagerCloniumGame::GetPawnOwnedByPlayer(const Play
                 {
                     if((*ColumnIterator)->GetPawn()->GetOwner() == player)
                     {
-                        result->push_back((*ColumnIterator));
+                        CellContainerIndex* index = new CellContainerIndex();
+                        index->row = rows;
+                        index->column = column;
+                        result->push_back(index);
                     }
                 }
             }
+            column++;
         }
+        rows++;
+        column = 0;
     }
     return result;
 }
 
 
 Player* ManagerCloniumGame::GetCurrentPlayer() const {
-    return GetPlayers()->at(index_Player);
+    if(GetPlayers()->size() != 0)
+        return GetPlayers()->at(index_Player);
+    else
+        return nullptr;
 }
 
 Player* ManagerCloniumGame::GetNextPlayer() const{
     index_Player=((index_Player+1)%GetNumberOfPlayer());
-    return GetPlayers()->at((index_Player));
+    if(GetPlayers()->size() != 0)
+        return GetPlayers()->at(index_Player);
+    else
+        return nullptr;
 
 }
 

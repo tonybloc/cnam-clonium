@@ -15,7 +15,7 @@ GUI_Individual::GUI_Individual(QWidget *parent, unsigned int nbHumans, unsigned 
 
     m_lblCreatePlayers = new QLabel("Création des joueurs");
     m_lblCreatePlayers->setFont(QFont("Commic Sans MS", 20));
-    m_lblCreatePlayers->setStyleSheet("font-weight:bold; color:black");
+    m_lblCreatePlayers->setStyleSheet("font-weight:bold; color:White");
     m_lblCreatePlayers->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
     m_lblCreatePlayers->setFrameShadow(QFrame::Raised);
     m_lblCreatePlayers->setAlignment(Qt::AlignHCenter);

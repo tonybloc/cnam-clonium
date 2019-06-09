@@ -29,7 +29,7 @@ public:
     Player* GetCurrentPlayer() const;
     Player* GetNextPlayer() const;
     std::vector<Player*>* GetPlayers() const;
-    std::vector<CellContainer*>* GetPawnOwnedByPlayer(const Player* player);
+    std::vector<CellContainerIndex*>* GetPawnOwnedByPlayer(const Player* player) const;
     CloniumGrid* GetGrid() const;
     CloniumGame* GetGame() const;
     void SetGame(CloniumGame* game);

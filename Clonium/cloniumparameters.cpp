@@ -22,6 +22,9 @@ CloniumParameters::CloniumParameters(QWidget *parent)
 
     m_lblGridShape = new QLabel("Taille de la grille :");
     m_lblGridShape->setFont(QFont("Commic Sans MS", 12));
+    m_lblGridShape->setStyleSheet("color:black");
+    m_lblGridShape->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+    m_lblGridShape->setFrameShadow(QFrame::Raised);
     m_lblGridShape->setWordWrap(true);
 
     ShapOption = new QMap<QString, AvailableCloniumGrid>();
@@ -32,13 +35,6 @@ CloniumParameters::CloniumParameters(QWidget *parent)
     m_cbo_GridShape = new QComboBox;
     m_cbo_GridShape->addItems(QStringList(ShapOption->keys()));
     m_cbo_GridShape->setCurrentIndex(1);
-
-
-    //button to create teams
-    /*m_btnTeam= new QPushButton("Jouer en équipe", this);
-    m_btnTeam->setFont(QFont("Commic Sans MS", 12));
-    m_btnTeam->setCursor(Qt::PointingHandCursor);
-    connect(m_btnTeam, SIGNAL(clicked()), this, SLOT(onClickTeam()));*/
 
     //button to create players
     m_btnIndividual= new QPushButton("Jouer", this);
@@ -72,7 +68,10 @@ QGroupBox *CloniumParameters::createGrpHumans(){
 
     ManagerGames& Game = ManagerGames::Instance();
 
-    m_grpHumans = new QGroupBox(tr("Nombre de joueurs :"));
+    m_grpHumans = new QGroupBox("Nombre de joueurs :");
+    m_grpHumans->setFont(QFont("Commic Sans MS", 12));
+    m_grpHumans->setStyleSheet("color:black");
+    m_grpHumans->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
     m_grpHumans->setMaximumHeight(100);
 
     // add components in the layout
@@ -101,7 +100,10 @@ QGroupBox *CloniumParameters::createGrpAI(){
 
     ManagerGames& Game = ManagerGames::Instance();
 
-    m_grpAI = new QGroupBox(tr("Nombre d'intelligences artificielles :"));
+    m_grpAI = new QGroupBox(tr("Nombre d'intelligences artificielles :"));    
+    m_grpAI->setFont(QFont("Commic Sans MS", 12));
+    m_grpAI->setStyleSheet("color:black");
+    m_grpAI->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
     m_grpAI->setMaximumHeight(100);
 
     m_vboxAI = new QHBoxLayout;
