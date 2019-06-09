@@ -3,14 +3,12 @@
 Game::Game(std::string title, uint min_player, uint max_player)
     : m_Grid(nullptr), m_Title(title), m_MinimumOfPlayers(min_player), m_MaximumOfPlayers(max_player)
 {
-    std::cout << "GAME" << std::endl;
     m_Players = new std::vector<Player*>();
 }
 
 Game::Game(std::string title, uint min_player, uint max_player, Grid* grid)
     : m_Grid(grid), m_Title(title), m_MinimumOfPlayers(min_player), m_MaximumOfPlayers(max_player)
 {
-    std::cout << "GAME" << std::endl;
     m_Players = new std::vector<Player*>();
 }
 

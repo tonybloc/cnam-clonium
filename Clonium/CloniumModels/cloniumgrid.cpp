@@ -157,6 +157,34 @@ std::vector<CellContainerIndex*>* CloniumGrid::GetAdjacent(const CellContainer* 
 
     return result;
 }
+
+std::vector<CellContainerIndex*>* CloniumGrid::GetCellContainer(const CellContainer* container)
+{
+    std::vector<CellContainerIndex*>* result = new std::vector<CellContainerIndex*>();
+
+    std::vector<std::vector<CellContainer*>*>::iterator RowIterator;
+    std::vector<CellContainer*>::iterator ColumnIterator;
+
+    uint row = 0;
+    uint column = 0;
+
+    for(RowIterator = m_CellContainers->begin(); RowIterator != m_CellContainers->end(); RowIterator++)
+    {
+        for(ColumnIterator = (*RowIterator)->begin(); ColumnIterator != (*RowIterator)->end(); ColumnIterator++)
+        {
+            if( (*ColumnIterator) == container)
+            {
+                CellContainerIndex* index = new CellContainerIndex();
+                index->row = row;
+                index->column = column;
+                result->push_back(index);
+            }
+        }
+    }
+
+    return result;
+}
+
 std::vector<CellContainerIndex*>* CloniumGrid::GetCellContainerWithPawnWithoutOwner()
 {
     std::vector<CellContainerIndex*>* result = new std::vector<CellContainerIndex*>();

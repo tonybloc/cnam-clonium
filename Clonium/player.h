@@ -20,7 +20,7 @@ public:
     {
         return (a.m_Id == b.m_Id && a.m_Name == b.m_Name);
     }
-    friend std::ostream& operator<<(std::ostream& os, const Player& p)
+    friend std::ostream& operator<<(std::ostream& os, Player& p)
     {
         return os << p.m_Id << " " << p.m_Name;
     }

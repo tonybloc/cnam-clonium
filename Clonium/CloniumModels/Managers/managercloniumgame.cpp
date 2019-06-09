@@ -56,8 +56,35 @@ std::vector<Player*>* ManagerCloniumGame::GetPlayers() const
     return m_Game->GetPlayers();
 }
 
+
+std::vector<CellContainer*>* ManagerCloniumGame::GetPawnOwnedByPlayer(const Player* player)
+{
+    std::vector<CellContainer*>* result = new std::vector<CellContainer*>();
+    std::vector<std::vector<CellContainer*>*>* CellsContainers = this->GetGrid()->GetCellsContainers();
+    std::vector<std::vector<CellContainer*>*>::iterator RowIterator;
+    std::vector<CellContainer*>::iterator ColumnIterator;
+
+    for(RowIterator = CellsContainers->begin(); RowIterator != CellsContainers->end(); RowIterator++ )
+    {
+        for(ColumnIterator = (*RowIterator)->begin(); ColumnIterator != (*RowIterator)->end(); ColumnIterator++)
+        {
+            if((*ColumnIterator)->GetPawn() != nullptr)
+            {
+                if((*ColumnIterator)->GetPawn()->GetOwner() != nullptr)
+                {
+                    if((*ColumnIterator)->GetPawn()->GetOwner() == player)
+                    {
+                        result->push_back((*ColumnIterator));
+                    }
+                }
+            }
+        }
+    }
+    return result;
+}
+
+
 Player* ManagerCloniumGame::GetCurrentPlayer() const {
-    std::cout << "Indice" << index_Player<< std::endl;
     return GetPlayers()->at(index_Player);
 }
 
@@ -133,12 +160,10 @@ ManagerCloniumPlayer& ManagerCloniumGame::GetManagerCloniumPlayer() const
 
 void ManagerCloniumGame::NextTurn(){
     nb_Round++;
-    std::cout<<"tour suivant" <<nb_Round<<std::endl;
 
 }
 
 uint ManagerCloniumGame::GetNumberOfTurn() const{
-    std::cout<<"Get Nb tour" <<nb_Round<<std::endl;
     return nb_Round;
 }
 

@@ -23,6 +23,7 @@ public:
     bool LoadGridFromFile(std::string filepath);
     void IncreaseValueOfPawn(const CellContainerIndex* index);
     std::vector<CellContainerIndex*>* GetAdjacent(const CellContainer* container);
+    std::vector<CellContainerIndex*>* GetCellContainer(const CellContainer* container);
     std::vector<CellContainerIndex*>* GetCellContainerWithPawnWithoutOwner();
 
 

@@ -6,7 +6,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QPropertyAnimation>
-
+#include <QLabel>
 using namespace std;
 
 #include "managergames.h"
@@ -21,8 +21,6 @@ public:
 
 private slots:
     void onClickButtonGrid();
-    void createFirstButton(uint i, uint j);
-    void createGridButtons(uint i, uint j);
     QString chooseColor(uint id, uint niveau);
 
     void Split(std::vector<QPushButton*> containers);
@@ -30,6 +28,7 @@ private slots:
 
 
     void UpdateImageSource(QPushButton* button);
+    void UpdateImageSource(QString buttonName);
 
     CloniumPawn* GetPawnLinkedToQPushButton(const QPushButton* button);
     CellContainer* GetCellContainerLinkedToQPushButton(const QPushButton* button);
@@ -48,7 +47,7 @@ private:
     // save button
     QPushButton *btnSave;
 
-    CloniumPawn* pawn;
+    //CloniumPawn* pawn;
 
     // animation
     QPropertyAnimation *m_animator;
