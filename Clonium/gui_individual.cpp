@@ -80,7 +80,6 @@ void GUI_Individual::startGame()
             if((*it)->m_lineEdite != nullptr)
             {
                 std::string name = (*it)->m_lineEdite->text().toStdString();
-                std::cout << "Creation d'un humain" << std::endl;
                 CloniumGame.AddCloniumPlayer(new CloniumPlayer(index, name));
             }
         }
@@ -89,15 +88,12 @@ void GUI_Individual::startGame()
             if((*it)->m_lineEdite != nullptr)
             {
                 std::string name = (*it)->m_lineEdite->text().toStdString();
-                std::cout << "Creation d'un IA" << std::endl;
                 CloniumGame.AddCloniumPlayer(new CloniumIA(index, name));
             }
         }
         index++;
     }
 
-    std::cout << "BEFOR GOTOGRID" << std::endl;
-    CloniumGame.GetGrid()->ShowGrid();
     QMetaObject::invokeMethod(this->parent(), "goToGrid");
 }
 

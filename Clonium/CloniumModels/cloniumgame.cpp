@@ -23,7 +23,6 @@ CloniumGame::~CloniumGame()
 
 Grid* CloniumGame::GetGrid() const
 {
-    dynamic_cast<CloniumGrid*>(m_Grid)->ShowGrid();
     return this->m_Grid;
 }
 void CloniumGame::SetGrid(Grid* const grid)
