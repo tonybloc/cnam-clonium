@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QPropertyAnimation>
 
 using namespace std;
 
@@ -46,6 +47,9 @@ private:
     QPushButton *btnSave;
 
     CloniumPawn* pawn;
+
+    // animation
+    QPropertyAnimation *m_animator;
 };
 
 #endif // GUI_GRID_H

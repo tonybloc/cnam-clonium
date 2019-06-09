@@ -40,6 +40,7 @@ public:
 protected:
     std::vector<Player*>* m_Players;
     Grid* m_Grid;
+    uint m_nb_rounds;
 
 private:
     inline void SetTitle(std::string title) {this->m_Title = title;}

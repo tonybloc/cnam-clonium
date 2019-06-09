@@ -1,5 +1,6 @@
 #include "gui_grid.h"
 #include <QMessageBox>
+#include <QGraphicsOpacityEffect>
 
 using namespace  std;
 
@@ -8,10 +9,11 @@ const string BLUE = ":/Ressources/Clonium/Images/Ressources/Clonium/Images/blue_
 const string GREY = ":/Ressources/Clonium/Images/Ressources/Clonium/Images/grey_";
 const string GREEN = ":/Ressources/Clonium/Images/Ressources/Clonium/Images/green_";
 
+
+ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
+
 GUI_Grid::GUI_Grid(QWidget *parent)
 {
-    ManagerCloniumGame& CloniumGame = ManagerGames::Instance().GetManagerCloniumGame();
-
     setFixedSize(500, 700);
 
     this->setParent(parent);
@@ -81,6 +83,24 @@ void GUI_Grid::onClickButtonGrid()
     std::vector<QPushButton*> listOfButton;
     listOfButton.push_back(btnSender);
 
+    QGraphicsOpacityEffect *eff  = new QGraphicsOpacityEffect(this);
+    btnSender->setGraphicsEffect(eff);
+
+    m_animator = new QPropertyAnimation(eff, "opacity");
+    m_animator->setDuration(500);
+    m_animator->setStartValue(1);
+    m_animator->setEndValue(1);
+    m_animator->setEasingCurve(QEasingCurve::InBack);
+    m_animator->start(QPropertyAnimation::DeleteWhenStopped);
+
+
+    QPixmap pix(":/Ressources/Clonium/Images/Ressources/Clonium/Images/green_1.png");
+    QIcon ButtonIcon(pix);
+    btnSender->setIcon(ButtonIcon);
+
+    int icon_with = this->size().width()/CloniumGame.GetGrid()->GetNumberOfRows()-2;
+    btnSender->setIconSize(QSize(icon_with,icon_with));
+    UpdateImageSource(btnSender);
     Split(listOfButton);
 }
 

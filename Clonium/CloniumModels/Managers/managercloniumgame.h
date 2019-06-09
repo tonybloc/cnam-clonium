@@ -24,6 +24,9 @@ public:
     // Add Player to Clonium Game
     void AddCloniumPlayer(CloniumPlayerAbstract* player);
     void RemoveCloniumPlayer(CloniumPlayerAbstract* player);
+
+    Player* GetCurrentPlayer();
+    Player* GetNextPlayer();
     std::vector<Player*>* GetPlayers() const;
     CloniumGrid* GetGrid() const;
     CloniumGame* GetGame() const;

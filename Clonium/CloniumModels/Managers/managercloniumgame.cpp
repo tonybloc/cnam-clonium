@@ -53,6 +53,15 @@ std::vector<Player*>* ManagerCloniumGame::GetPlayers() const
 {
     return m_Game->GetPlayers();
 }
+
+Player* ManagerCloniumGame::GetCurrentPlayer() {
+
+}
+
+Player* ManagerCloniumGame::GetNextPlayer() {
+
+}
+
 CloniumGrid* ManagerCloniumGame::GetGrid() const
 {
     if(m_Game != nullptr)
