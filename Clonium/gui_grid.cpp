@@ -265,8 +265,21 @@ void GUI_Grid::UpdateImageSource(QPushButton* button)
     CloniumPawn* pawn = GetPawnLinkedToQPushButton(button);
     if(pawn != nullptr)
     {
-        button->setIcon(QIcon(chooseColor(1, pawn->GetLevel())));
-        button->setIconSize(QSize(30,30));
+        button->setIcon(QIcon(chooseColor(CloniumGame.GetCurrentPlayer()->GetId(), pawn->GetLevel())));
+        button->setToolTip(QString::fromStdString(CloniumGame.GetCurrentPlayer()->GetName()));
+
+        QGraphicsOpacityEffect *eff  = new QGraphicsOpacityEffect(this);
+        button->setGraphicsEffect(eff);
+
+        m_animator = new QPropertyAnimation(eff, "opacity");
+        m_animator->setDuration(500);
+        m_animator->setStartValue(1);
+        m_animator->setEndValue(1);
+        m_animator->setEasingCurve(QEasingCurve::InBack);
+        m_animator->start(QPropertyAnimation::DeleteWhenStopped);
+
+        int icon_with = this->size().width()/CloniumGame.GetGrid()->GetNumberOfRows()-2;
+        button->setIconSize(QSize(icon_with,icon_with));
     }
 }
 
@@ -294,28 +307,4 @@ CellContainer* GUI_Grid::GetCellContainerLinkedToQPushButton(const QPushButton* 
     GetRowAndColumnFromQButtonName(button, row, column);
 
     return CloniumGame.GetGrid()->GetElementAt(*row, *column);
-}
-
-void GUI_Grid::UpdateImageSource(QPushButton* button)
-{
-    CloniumPawn* pawn = GetPawnLinkedToQPushButton(button);
-    if(pawn != nullptr)
-    {
-        button->setIcon(QIcon(chooseColor(CloniumGame.GetCurrentPlayer()->GetId(), pawn->GetLevel())));
-        button->setToolTip(QString::fromStdString(CloniumGame.GetCurrentPlayer()->GetName()));
-
-        QGraphicsOpacityEffect *eff  = new QGraphicsOpacityEffect(this);
-        button->setGraphicsEffect(eff);
-
-        m_animator = new QPropertyAnimation(eff, "opacity");
-        m_animator->setDuration(500);
-        m_animator->setStartValue(1);
-        m_animator->setEndValue(1);
-        m_animator->setEasingCurve(QEasingCurve::InBack);
-        m_animator->start(QPropertyAnimation::DeleteWhenStopped);
-
-        int icon_with = this->size().width()/CloniumGame.GetGrid()->GetNumberOfRows()-2;
-        button->setIconSize(QSize(icon_with,icon_with));
-
-    }
 }
