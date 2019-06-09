@@ -22,7 +22,10 @@ public:
 
     inline uint GetMinumumOfPlayer(void) const {return this->m_MinimumOfPlayers;}
     inline uint GetMaximumOfPlayer(void) const {return this->m_MaximumOfPlayers;}
-    inline uint GetNumberOfPlayer(void) const  {return static_cast<uint>(m_Players->size());}
+    inline uint GetNumberOfPlayer(void) const  {
+std::cout<<"Nb players"<<m_Players->size()<<std::endl;
+        return static_cast<uint>(m_Players->size());
+                                               }
     inline std::string GetTitle(void) const {return this->m_Title;}
     inline std::vector<Player*>* GetPlayers(void) const {return m_Players;}
 
@@ -40,6 +43,7 @@ public:
 protected:
     std::vector<Player*>* m_Players;
     Grid* m_Grid;
+    uint m_nb_rounds;
 
 private:
     inline void SetTitle(std::string title) {this->m_Title = title;}

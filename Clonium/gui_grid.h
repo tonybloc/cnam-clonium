@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QPropertyAnimation>
 
 using namespace std;
 
@@ -27,7 +28,9 @@ private slots:
     void Split(std::vector<QPushButton*> containers);
     void GetRowAndColumnFromQButtonName(const QPushButton* button, uint* row, uint* column);
 
+
     void UpdateImageSource(QPushButton* button);
+
     CloniumPawn* GetPawnLinkedToQPushButton(const QPushButton* button);
     CellContainer* GetCellContainerLinkedToQPushButton(const QPushButton* button);
 
@@ -46,6 +49,9 @@ private:
     QPushButton *btnSave;
 
     CloniumPawn* pawn;
+
+    // animation
+    QPropertyAnimation *m_animator;
 };
 
 #endif // GUI_GRID_H

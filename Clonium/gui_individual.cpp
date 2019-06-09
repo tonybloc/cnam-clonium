@@ -94,6 +94,8 @@ void GUI_Individual::startGame()
         index++;
     }
 
+    std::cout << "BEFOR GOTOGRID" << std::endl;
+    //CloniumGame.GetGrid()->ShowGrid();
     QMetaObject::invokeMethod(this->parent(), "goToGrid");
 }
 

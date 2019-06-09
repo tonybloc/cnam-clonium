@@ -15,6 +15,7 @@
 class ManagerCloniumGame
 {
 public:
+
     static ManagerCloniumGame& Instance();
     ~ManagerCloniumGame();
 
@@ -24,16 +25,23 @@ public:
     // Add Player to Clonium Game
     void AddCloniumPlayer(CloniumPlayerAbstract* player);
     void RemoveCloniumPlayer(CloniumPlayerAbstract* player);
+
+    Player* GetCurrentPlayer() const;
+    Player* GetNextPlayer() const;
     std::vector<Player*>* GetPlayers() const;
     CloniumGrid* GetGrid() const;
     CloniumGame* GetGame() const;
     void SetGame(CloniumGame* game);
     uint GetNumberOfHuman() const;
     uint GetNumberOfIA() const ;
+    uint GetNumberOfPlayer() const;
     uint GetMaximumOfPlayer() const;
     uint GetMinimumOfPlayer() const;
-
     void IncreaseValueOfPawn();
+
+    void NextTurn();
+    uint GetNumberOfTurn() const;
+
     // Initialize Game
     void InitializeCloniumGame(AvailableCloniumGrid shap);
 
@@ -43,6 +51,9 @@ public:
     bool SaveCloniumGame(std::string filePath);
 
 private:
+    static uint index_Player;
+    static uint nb_Round;
+
     ManagerCloniumGame();
     static bool Predicate_FindCellContainersLinkedToPawnWithoutOwner(CellContainer& container);
     static bool Predicate_PlayerIsHuman(Player* p);

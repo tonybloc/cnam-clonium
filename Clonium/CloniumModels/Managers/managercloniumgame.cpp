@@ -1,6 +1,8 @@
 #include "managercloniumgame.h"
 
 ManagerCloniumGame ManagerCloniumGame::m_instance = ManagerCloniumGame();
+uint ManagerCloniumGame::index_Player=0;
+uint ManagerCloniumGame::nb_Round=0;
 
 ManagerCloniumGame::ManagerCloniumGame()
 {
@@ -53,6 +55,18 @@ std::vector<Player*>* ManagerCloniumGame::GetPlayers() const
 {
     return m_Game->GetPlayers();
 }
+
+Player* ManagerCloniumGame::GetCurrentPlayer() const {
+    std::cout << "Indice" << index_Player<< std::endl;
+    return GetPlayers()->at(index_Player);
+}
+
+Player* ManagerCloniumGame::GetNextPlayer() const{
+    index_Player=((index_Player+1)%GetNumberOfPlayer());
+    return GetPlayers()->at((index_Player));
+
+}
+
 CloniumGrid* ManagerCloniumGame::GetGrid() const
 {
     if(m_Game != nullptr)
@@ -74,11 +88,16 @@ uint ManagerCloniumGame::GetNumberOfHuman() const
 uint ManagerCloniumGame::GetNumberOfIA() const{
     if(m_Game != nullptr)
     {
-       long value = std::count_if(m_Game->GetPlayers()->begin(), m_Game->GetPlayers()->end(), Predicate_PlayerIsIA);
-       return static_cast<uint>(value);
+        long value = std::count_if(m_Game->GetPlayers()->begin(), m_Game->GetPlayers()->end(), Predicate_PlayerIsIA);
+        return static_cast<uint>(value);
     }
     return 0;
 }
+
+uint ManagerCloniumGame::GetNumberOfPlayer() const{
+    return GetNumberOfIA() + GetNumberOfHuman();
+}
+
 uint ManagerCloniumGame::GetMaximumOfPlayer() const
 {
     return m_Game->GetMaximumOfPlayer();
@@ -112,6 +131,16 @@ ManagerCloniumPlayer& ManagerCloniumGame::GetManagerCloniumPlayer() const
     return ManagerCloniumPlayer::Instance();
 }
 
+void ManagerCloniumGame::NextTurn(){
+    nb_Round++;
+    std::cout<<"tour suivant" <<nb_Round<<std::endl;
+
+}
+
+uint ManagerCloniumGame::GetNumberOfTurn() const{
+    std::cout<<"Get Nb tour" <<nb_Round<<std::endl;
+    return nb_Round;
+}
 
 
 ManagerCloniumGame& ManagerCloniumGame::Instance()
